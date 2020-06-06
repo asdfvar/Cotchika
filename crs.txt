@@ -1,0 +1,21 @@
+set the definition of cells in the selection box as cells that are completely contained within the bounds
+
+define total energy "Joules" required to complete the action and define a power in the units
+
+replace "actions" with "jobs"
+
+highlight the path of each unit in the graphics
+
+make subclasses of the container type specific to the units and actions to support custom functionality
+
+enforce restrictions on how many threads can be accessed simultaneously. for units, this means only setting a path if less than *N* other units are setting a path where *N* is the number of simultaneous threads supported by the hardware
+
+define grounded cell as a cell that can draw a connected path (with adjacent cells only) to the bottom
+
+rename method "map_dim" to "size"
+
+write conversion routine between window view and map position
+
+make job subclass specific to the type of job it is
+
+update air and ground cells individually rather than recompute them everytime so that they can be managed independently of actual cell material (i.e. a job in the process of filling in a space)

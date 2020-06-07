@@ -241,6 +241,17 @@ void Society::update (float time_step)
                job->get_position (1),
                job->get_position (2) };
 
+            // first-pass test if this cell is potentially accessible.
+            // this is cheaper than the path planning approach below
+            if (Map->is_enclosed_ground_cell (job_location_cell))
+            {
+               // Advance the current job index
+               if (++current_job_index >= queued_jobs.size ())
+                  current_job_index = 0;
+
+               continue;
+            }
+
             // test if this cell is accessible to the unit
             bool accessible =
                cost_function (
@@ -321,7 +332,7 @@ std::cout << __FILE__ << __LINE__ << ":assigning job " << job << " to unit " << 
             // Remove the job from the unit's list
             unit->pop_active_job ();
 
-std::cout << __FILE__ << __LINE__ << "unit " << unit << " about to delete job " << job << " num jobs = " << unit->num_jobs () << std::endl;
+std::cout << __FILE__ << __LINE__ << ":unit " << unit << " about to delete job " << job << " num jobs = " << unit->num_jobs () << std::endl;
             delete job;
          }
       }

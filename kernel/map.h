@@ -29,6 +29,7 @@ class MAP
       bool get_ground_cell (int ind[3]);
       unsigned int get_material (int ind) { return material[ind]; };
       unsigned int get_material (int ind[3]);
+      bool is_enclosed_ground_cell (int ind[3]);
 
       int shape (int dim) { return size[dim]; };
 

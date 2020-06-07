@@ -185,6 +185,28 @@ unsigned int MAP::get_material (int ind[3])
    return material[flattened_ind];
 }
 
+bool MAP::is_enclosed_ground_cell (int ind[3])
+{
+   for (int indx = ind[0] - 1; indx <= ind[0] + 1; indx++) {
+      if (indx < 0 || indx >= size[0]) continue;
+      for (int indy = ind[1] - 1; indy <= ind[1] + 1; indy++) {
+         if (indy < 0 || indy >= size[1]) continue;
+         for (int indz = ind[2] - 1; indz <= ind[2] + 1; indz++) {
+
+            if (indz < 0 || indz >= size[2]) continue;
+
+            int near_ind[3] = { indx, indy, indz };
+
+            int flattened_ind = dim_to_flat_ind (3, near_ind, size);
+
+            if (ground[flattened_ind] == true) return false;
+         }
+      }
+   }
+
+   return true;
+}
+
 // Ground map is dependent on the air map. It is the same with the exception that
 // open spaces not supported by ground are set as invalid (ground)
 void MAP::set_map (void)

@@ -60,7 +60,7 @@ void Society::set_view (float transform[4], float translation[2])
 
    const bool  *ground_map = Map->access_ground ();
 
-   const int num_units = 2;
+   const int num_units = 30;
 
    for (int unit_ind = 0; unit_ind < num_units; unit_ind++)
    {

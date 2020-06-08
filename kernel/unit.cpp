@@ -202,14 +202,6 @@ void Unit::update (float time_step)
          jm.set_return_all_jobs ();
 
 std::cout << __FILE__ << __LINE__ << ":unit " << this << " is in an invalid block" << std::endl;
-#if 0
-         // Push the unit upwards until it's no longer inside a block
-         for (ground_cell_value = Map->get_ground_cell (position_cell);
-               ground_cell_value == false; position_cell[2] += 1)
-         {
-            position[2] += 1.0f;
-         }
-#else
          int size[3] = {
             Map->shape (0),
             Map->shape (1),
@@ -220,7 +212,6 @@ std::cout << __FILE__ << __LINE__ << ":unit " << this << " is in an invalid bloc
          position[0] = static_cast<float> (flat_ind_to_dim (0, flat_ind, size));
          position[1] = static_cast<float> (flat_ind_to_dim (1, flat_ind, size));
          position[2] = static_cast<float> (flat_ind_to_dim (2, flat_ind, size));
-#endif
 std::cout << __FILE__ << __LINE__ << ":resolved unit " << this << " invalid block issue" << std::endl;
       }
 
@@ -391,11 +382,13 @@ bool Unit::available_job_slots (void)
    return jm.available_job_slots ();
 }
 
+void Unit::set_return_all_jobs (void)
+{
+   jm.set_return_all_jobs ();
+}
+
 Job *Unit::pop_return_job (void)
 {
    state      = STANDBY;
-
-   jm.set_return_all_jobs ();
-
    return jm.pop_return_job ();
 }

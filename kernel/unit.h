@@ -35,6 +35,7 @@ class Unit
       int num_total_jobs (void) { return jm.num_total_jobs (); };
       Job *pop_return_job (void);
       Job *pop_active_job (void) { return jm.pop_active_job (); };
+      void set_return_all_jobs (void);
       Job *return_job (void)     { return jm.pop_return_job (); };
       virtual void draw (float *transform, float *translation) {};
 

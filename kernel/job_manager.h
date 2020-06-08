@@ -103,8 +103,10 @@ class Job_manager
 
       void set_return_all_jobs (void)
       {
-         Job *job = jobs_list.pop_back ();
-         while (jobs_list.size () > 0) return_jobs.push_front (job);
+         while (jobs_list.size () > 0) {
+            Job *job = jobs_list.pop_back ();
+            return_jobs.push_front (job);
+         }
       };
 
       int get_active_job_position (int ind)

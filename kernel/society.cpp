@@ -60,7 +60,7 @@ void Society::set_view (float transform[4], float translation[2])
 
    const bool  *ground_map = Map->access_ground ();
 
-   const int num_units = 6;
+   const int num_units = 2;
 
    for (int unit_ind = 0; unit_ind < num_units; unit_ind++)
    {
@@ -194,12 +194,7 @@ void Society::set_destination (int destination[3], bool selected_units)
 
       if (location_value >= 0)
       {
-         // Return any jobs the unit has if any
-         while (unit->num_return_jobs () > 0) {
-            Job *job = unit->pop_return_job ();
-std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued jobs" << std::endl;
-            queued_jobs.push_front (job);
-         }
+         unit->set_return_all_jobs ();
 
          // Set the unit destination
          unit->set_destination (dest);
@@ -214,6 +209,16 @@ void Society::update (float time_step)
 
    float *cost         = fbuffer;
    float *local_buffer = fbuffer + size[0] * size[1] * size[2];
+
+   for (int unit_ind = 0; unit_ind < units.size (); unit_ind++) {
+      Unit *unit = units.access (unit_ind);
+      // Return any jobs the unit has if any
+      if (unit->num_return_jobs () > 0) {
+         Job *job = unit->pop_return_job ();
+std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued jobs" << std::endl;
+         queued_jobs.push_front (job);
+      }
+   }
 
    int iteration_max = 5 + rand () % 10;
 
@@ -313,6 +318,7 @@ std::cout << __FILE__ << __LINE__ << ":assigning job " << job << " to unit " << 
             if (unit_flat_ind == flat_ind) unit_coincides = true;
          }
 
+unit_coincides = false;
          // Complete the job if it's done and no other units conflict with its completion
          if (job->is_complete () && !unit_coincides)
          {

@@ -5,6 +5,21 @@
 #include "jobs.h"
 #include <pthread.h>
 
+// assess backlog jobs for inclusion in the accessible jobs list.
+
+// given copies of: unit locations, accessibility map, job locations and type.
+
+// for each job location that is backlogged:
+// test if the job location is enclosed.
+// test if the job location is accessible to any unit.
+// if all tests pass, add to the list of candidate accessible jobs.
+
+// for each candidate accessible job:
+// test if completing the job makes any of the other candidate and currently existing accessible jobs no longer accessible. any that don't pass are added back to the backlog.
+
+// for each remaining candidate accessible job:
+// find the job closest to any unit (not necessarily unique) and push that to the front of the available jobs list (FIFO).
+
 class Job_manager
 {
    public:
@@ -16,10 +31,10 @@ class Job_manager
          initialize ();
       };
 
-     ~Job_manager (void)
-     {
-        pthread_mutex_destroy (&lock);
-     }
+      ~Job_manager (void)
+      {
+         pthread_mutex_destroy (&lock);
+      }
 
       void initialize (void) {
          pthread_mutex_init (&lock, nullptr);

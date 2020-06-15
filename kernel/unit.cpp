@@ -98,6 +98,7 @@ void Unit::set_destination (int dest_in[3])
          dim,
          dest_in,
          start,
+         100000,
          buffer);
 
    // Return and don't do anything if a solution is not found

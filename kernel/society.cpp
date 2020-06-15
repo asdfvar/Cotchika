@@ -7,6 +7,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include <climits>
 
 #define MAX(A,B) ((A) > (B) ? (A) : (B))
 #define MIN(A,B) ((A) < (B) ? (A) : (B))
@@ -23,13 +24,12 @@ Society::Society (void)
 
    int map_layer = 20;
 
-   current_job_unit_index = 0;
-   current_job_index      = 0;
-
    const bool *ground_map = Map->access_ground ();
 
    ibuffer = new   int[    size[0] * size[1] * size[2]];
    fbuffer = new float[2 * size[0] * size[1] * size[2]];
+
+   current_job_index = 0;
 }
 
 Society::~Society (void)
@@ -210,9 +210,9 @@ void Society::update (float time_step)
    float *cost         = fbuffer;
    float *local_buffer = fbuffer + size[0] * size[1] * size[2];
 
+   // Return any jobs the unit has if any
    for (int unit_ind = 0; unit_ind < units.size (); unit_ind++) {
       Unit *unit = units.access (unit_ind);
-      // Return any jobs the unit has if any
       if (unit->num_return_jobs () > 0) {
          Job *job = unit->pop_return_job ();
 std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued jobs" << std::endl;
@@ -223,70 +223,102 @@ std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued
    int iteration_max = 5 + rand () % 10;
 
    // Assign jobs for units with available job slots
-   for (int iteration = 0; iteration < iteration_max; iteration++)
-   {
-      // Assign ready jobs for the current available unit
-      Unit *unit = units.access (current_job_unit_index);
+   Container<Unit> exclusion_units;
 
-      int unit_location[3] = {
-         (int)unit->get_position (0),
-         (int)unit->get_position (1),
-         (int)unit->get_position (2) };
-
-      if (unit->available_job_slots ())
-      {
-         if (queued_jobs.size() > 0)
-         {
-            Job *job = queued_jobs.access (current_job_index);
-
-            // Test if this job has a ground-accessible cell near it by
-            // first getting the job's cell location
-            int job_location_cell[3] = {
-               job->get_position (0),
-               job->get_position (1),
-               job->get_position (2) };
-
-            // first-pass test if this cell is potentially accessible.
-            // this is cheaper than the path planning approach below
-            if (Map->is_enclosed_ground_cell (job_location_cell))
-            {
-               // Advance the current job index
-               if (++current_job_index >= queued_jobs.size ())
-                  current_job_index = 0;
-
-               continue;
-            }
-
-            // test if this cell is accessible to the unit
-            bool accessible =
-               cost_function (
-                     ground_map,
-                     weight,
-                     cost,
-                     size,
-                     job_location_cell,
-                     unit_location,
-                     local_buffer);
-
-            if (accessible)
-            {
-std::cout << __FILE__ << __LINE__ << ":assigning job " << job << " to unit " << unit << " num queued jobs = " << queued_jobs.size () << std::endl;
-               // The job is accessible to the unit, assign it to the unit
-               // and remove this job from the list since it now belongs to the unit
-               unit->assign_job (queued_jobs.pop (current_job_index--));
-               if (current_job_index < 0) current_job_index = 0;
-            }
-         }
+   bool job_assigned = false;
+//   for (current_job_index = 0; current_job_index < queued_jobs.size () && !job_assigned; current_job_index++) {
+   for (int it = 0; it < 1 && !job_assigned; it++, current_job_index++) {
+      if (current_job_index >= queued_jobs.size ()) {
+         current_job_index = 0;
+         continue;
       }
 
-      // Advance the current unit index (for assigning jobs)
-      if (++current_job_unit_index >= units.size ())
-      {
-         current_job_unit_index = 0;
+      Job *job = queued_jobs.access (current_job_index);
 
-         // Advance the current job index
-         if (++current_job_index >= queued_jobs.size ())
-            current_job_index = 0;
+      int job_location_cell[3] = {
+         job->get_position (0),
+         job->get_position (1),
+         job->get_position (2) };
+
+      // first-pass test if this cell is potentially accessible.
+      // this is cheaper than the path planning approach below
+      if (Map->is_enclosed_ground_cell (job_location_cell)) continue;
+
+      for (int test_unit_index = 0; test_unit_index < units.size () && !job_assigned; test_unit_index++)
+      {
+         Unit *candidate_unit = nullptr;
+
+         int min_dist = INT_MAX;
+         int unit_location[3];
+
+         // Find the next available unit closest to this job
+         for (int unit_index = 0; unit_index < units.size (); unit_index++)
+         {
+            Unit *unit = units.access (unit_index);
+
+            if (!unit->available_job_slots ()) continue;
+
+            unit_location[0] = (int)unit->get_position (0);
+            unit_location[1] = (int)unit->get_position (1);
+            unit_location[2] = (int)unit->get_position (2);
+
+            bool exclude = false;
+            // loop through exclusion_units
+            for (int ex_unit_index = 0;
+                  ex_unit_index < exclusion_units.size ();
+                  ++ex_unit_index) {
+
+               Unit *ex_unit = exclusion_units.access (ex_unit_index);
+               if (candidate_unit == ex_unit) {
+                  exclude = true;
+                  break;
+               }
+            }
+
+            if (exclude) continue;
+
+            int dist2 = 
+               (job_location_cell[0] - unit_location[0]) *
+               (job_location_cell[0] - unit_location[0]) +
+               (job_location_cell[1] - unit_location[1]) *
+               (job_location_cell[1] - unit_location[1]) +
+               (job_location_cell[2] - unit_location[2]) *
+               (job_location_cell[2] - unit_location[2]);
+
+            if (dist2 < min_dist) {
+               min_dist       = dist2;
+               candidate_unit = unit;
+            }
+         }
+
+         if (candidate_unit == nullptr) continue;
+
+std::cout << __FILE__ << __LINE__ << ":got_here" << std::endl;
+         // test the candidate unit to see if it can access the job
+         // test if this cell is accessible to the unit
+         bool accessible =
+            cost_function (
+                  ground_map,
+                  weight,
+                  cost,
+                  size,
+                  job_location_cell,
+                  unit_location,
+                  100000,
+                  local_buffer);
+std::cout << __FILE__ << __LINE__ << ":got_here" << std::endl;
+
+         if (accessible)
+         {
+            // The job is accessible to the unit, assign it to the unit
+            // and remove this job from the list since it now belongs to the unit
+            candidate_unit->assign_job (queued_jobs.pop (current_job_index));
+            job_assigned = true;
+            break;
+         }
+         else {
+            exclusion_units.push_front (candidate_unit);
+         }
       }
    }
 

@@ -243,6 +243,7 @@ bool cost_function (
       int          dim[3],
       int          start[3],
       int          end[3],
+      int          limit,
       float       *buffer)
 {
    const int dim_prod = dim[0] * dim[1] * dim[2];
@@ -269,7 +270,7 @@ bool cost_function (
    // Build the cost function for all valid spaces available to it
    // or until the end cell has been reached (implicitly determined
    // by the subsequent function call via the "path_cost_ind_size")
-   while (path_cost_ind_size > 0)
+   for (int it = 0; it < limit && path_cost_ind_size > 0; it++)
    {
       path_cost_ind_size = cost_function_one_step (
             nodes,

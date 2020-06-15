@@ -40,6 +40,7 @@ bool cost_function (
       int          dim[3],
       int          src[3],
       int          dst[3],
+      int          limit,
       float       *buffer);
 
 bool cost_function2 (

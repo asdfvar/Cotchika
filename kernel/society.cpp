@@ -220,16 +220,12 @@ std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued
       }
    }
 
-   int iteration_max = 5 + rand () % 10;
-
    // Assign jobs for units with available job slots
    Container<Unit> exclusion_units;
 
    bool job_assigned = false;
-//   for (current_job_index = 0; current_job_index < queued_jobs.size () && !job_assigned; current_job_index++) {
    for (int it = 0; it < 1 && !job_assigned; it++)
    {
-std::cout << __FILE__ << __LINE__ << ":current job index = " << current_job_index << ". queued jobs size = " << queued_jobs.size () << std::endl;
       if (current_job_index >= queued_jobs.size ()) {
          current_job_index = 0;
          continue;
@@ -295,9 +291,13 @@ std::cout << __FILE__ << __LINE__ << ":current job index = " << current_job_inde
 
          if (candidate_unit == nullptr) continue;
 
+         bool accessible = false;
+
+         const int max_cost_length = size[0] + size[1] + size[2];
+
          // test the candidate unit to see if it can access the job
          // test if this cell is accessible to the unit
-         bool accessible =
+         accessible =
             cost_function (
                   ground_map,
                   weight,
@@ -305,8 +305,11 @@ std::cout << __FILE__ << __LINE__ << ":current job index = " << current_job_inde
                   size,
                   job_location_cell,
                   unit_location,
-                  100000,
+                  max_cost_length,
                   local_buffer);
+
+         // one final check if the cell is within reach
+         if (min_dist <= 1) accessible = true;
 
          if (accessible)
          {

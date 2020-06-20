@@ -26,7 +26,7 @@ class Job_manager
 
       Job_manager (void)
       {
-         jobs_limit = 1;
+         jobs_limit = 4;
          active_job = 0;
          initialize ();
       };

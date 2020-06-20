@@ -227,7 +227,9 @@ std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued
 
    bool job_assigned = false;
 //   for (current_job_index = 0; current_job_index < queued_jobs.size () && !job_assigned; current_job_index++) {
-   for (int it = 0; it < 1 && !job_assigned; it++, current_job_index++) {
+   for (int it = 0; it < 1 && !job_assigned; it++)
+   {
+std::cout << __FILE__ << __LINE__ << ":current job index = " << current_job_index << ". queued jobs size = " << queued_jobs.size () << std::endl;
       if (current_job_index >= queued_jobs.size ()) {
          current_job_index = 0;
          continue;
@@ -293,7 +295,6 @@ std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued
 
          if (candidate_unit == nullptr) continue;
 
-std::cout << __FILE__ << __LINE__ << ":got_here" << std::endl;
          // test the candidate unit to see if it can access the job
          // test if this cell is accessible to the unit
          bool accessible =
@@ -306,7 +307,6 @@ std::cout << __FILE__ << __LINE__ << ":got_here" << std::endl;
                   unit_location,
                   100000,
                   local_buffer);
-std::cout << __FILE__ << __LINE__ << ":got_here" << std::endl;
 
          if (accessible)
          {
@@ -321,6 +321,9 @@ std::cout << __FILE__ << __LINE__ << ":got_here" << std::endl;
          }
       }
    }
+
+   if (!job_assigned) current_job_index++;
+   if (current_job_index >= queued_jobs.size ()) current_job_index = 0;
 
    // Update units
    for (int unit_ind = 0; unit_ind < units.size (); unit_ind++)

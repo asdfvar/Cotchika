@@ -17,6 +17,7 @@ OBJS = $(OBJDIR)/society.o     \
        $(OBJDIR)/map.o         \
        $(OBJDIR)/container.o   \
        $(OBJDIR)/jobs.o        \
+       $(OBJDIR)/job_manager.o \
        $(OBJDIR)/graphics.o    \
        $(OBJDIR)/math_utils.o  \
        $(OBJDIR)/timer.o       \

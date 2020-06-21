@@ -32,7 +32,7 @@ directories:
 	@mkdir -p $(OBJDIR)
 
 clean:
-	rm $(OBJS) $(LIBNAME)
+	rm -r $(OBJDIR) $(LIBNAME)
 
 $(OBJDIR)/%.o: %.cpp
 	$(CC) $(INC) $(FLAGS) $^ $(DIRECTIVES) -c -o $@

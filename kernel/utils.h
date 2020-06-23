@@ -10,7 +10,14 @@ static float window_to_cell (
       float  point, // point in the window
       int    dim)   // number of cells that make up the map
 {
-   return (point + 1.0f) / 2.0f * (float)dim;
+   float fdim = (float)dim;
+
+   float result = (point + 1.0f) / 2.0f * fdim;
+
+   if (result >= fdim) result = fdim;
+   if (result < 0.0f)  result = 0.0f;
+
+   return result;
 }
 
 // Convert a flattened index to the specified Cartesian index

@@ -26,6 +26,8 @@ Unit::Unit (
 
    direction = 0.0f;
 
+   max_weight = 1000;
+
    position[0] = position_in[0];
    position[1] = position_in[1];
    position[2] = position_in[2];

@@ -10,17 +10,19 @@ FLAGS = -g
 
 OBJDIR = objdir
 
-OBJS = $(OBJDIR)/society.o     \
-       $(OBJDIR)/pathfinding.o \
-       $(OBJDIR)/unit.o        \
-       $(OBJDIR)/draw_unit.o   \
-       $(OBJDIR)/map.o         \
-       $(OBJDIR)/container.o   \
-       $(OBJDIR)/jobs.o        \
-       $(OBJDIR)/job_manager.o \
-       $(OBJDIR)/graphics.o    \
-       $(OBJDIR)/math_utils.o  \
-       $(OBJDIR)/timer.o       \
+OBJS = \
+       $(OBJDIR)/container.o        \
+       $(OBJDIR)/derivative_units.o \
+       $(OBJDIR)/draw_unit.o        \
+       $(OBJDIR)/graphics.o         \
+       $(OBJDIR)/job_manager.o      \
+       $(OBJDIR)/jobs.o             \
+       $(OBJDIR)/map.o              \
+       $(OBJDIR)/math_utils.o       \
+       $(OBJDIR)/pathfinding.o      \
+       $(OBJDIR)/timer.o            \
+       $(OBJDIR)/unit.o             \
+       $(OBJDIR)/society.o          \
 #
 
 LIBNAME = libsociety.a

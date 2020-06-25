@@ -6,9 +6,6 @@
 #include <GL/glext.h>
 #include <cmath>
 
-Squiggly::Squiggly (float position[3], MAP* Map) : Unit { position, Map } { }
-Wiggly::Wiggly (float position[3], MAP* Map) : Unit { position, Map } { }
-
 void Squiggly::draw (float *transform, float *translation)
 {
    int map_layer = Map->get_map_layer ();

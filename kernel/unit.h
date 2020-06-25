@@ -43,25 +43,27 @@ class Unit
 
       unsigned int tic;
 
+      int              max_weight; // grams
+
       enum State_type { STANDBY, MOVING, FALLING };
-      State_type state;
-      MAP   *Map;
-      float *cost;
-      float *buffer;
-      Job_manager jm;
-      Container<Item> items;
-      int   *path;
-      bool   trim_path_end;
-      float position[3];
-      int   dest[3];
-      int   residency[3];
-      float speed;
-      float direction;
-      float min_job_dist2;
-      float power;
-      bool selected;
-      int path_size;
-      bool solution_found;
+      State_type       state;
+      MAP             *Map;
+      float           *cost;
+      float           *buffer;
+      Job_manager      jm;
+      Container<Item>  items;
+      int             *path;
+      bool             trim_path_end;
+      float            position[3];
+      int              dest[3];
+      int              residency[3];
+      float            speed;
+      float            direction;
+      float            min_job_dist2;
+      float            power;
+      bool             selected;
+      int              path_size;
+      bool             solution_found;
 };
 
 #endif

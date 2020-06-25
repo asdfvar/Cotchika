@@ -6,10 +6,10 @@
 #include <GL/glext.h>
 #include <cmath>
 
-X01::X01 (float position[3], MAP* Map) : Unit { position, Map } { }
-X02::X02 (float position[3], MAP* Map) : Unit { position, Map } { }
+Squiggly::Squiggly (float position[3], MAP* Map) : Unit { position, Map } { }
+Wiggly::Wiggly (float position[3], MAP* Map) : Unit { position, Map } { }
 
-void X01::draw (float *transform, float *translation)
+void Squiggly::draw (float *transform, float *translation)
 {
    int map_layer = Map->get_map_layer ();
 
@@ -93,7 +93,7 @@ void X01::draw (float *transform, float *translation)
    }
 }
 
-void X02::draw (float *transform, float *translation)
+void Wiggly::draw (float *transform, float *translation)
 {
    int map_layer = Map->get_map_layer ();
 

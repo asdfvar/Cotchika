@@ -3,18 +3,18 @@
 
 #include "unit.h"
 
-class X01 : public Unit
+class Squiggly : public Unit
 {
    public:
-      X01 (float position[3], MAP* Map);
+      Squiggly (float position[3], MAP* Map);
 
       void draw (float *transform, float *translation) override;
 };
 
-class X02 : public Unit
+class Wiggly : public Unit
 {
    public:
-      X02 (float position[3], MAP* Map);
+      Wiggly (float position[3], MAP* Map);
 
       void draw (float *transform, float *translation) override;
 };

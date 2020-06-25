@@ -75,9 +75,9 @@ void Society::set_view (float transform[4], float translation[2])
          static_cast<float> (cell_ind[2]) };
 
       if (unit_ind % 2 == 1)
-         units.push_back (new X01 (location, Map));
+         units.push_back (new Squiggly (location, Map));
       else
-         units.push_back (new X02 (location, Map));
+         units.push_back (new Wiggly (location, Map));
 
       // TODO: do this better and more robustly
       x += 1.0f;

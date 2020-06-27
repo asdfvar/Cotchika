@@ -26,7 +26,8 @@ Unit::Unit (
 
    direction = 0.0f;
 
-   max_weight = 1000;
+   max_weight = 10000000; // 10,000,000 g
+   weight     = 0;
 
    position[0] = position_in[0];
    position[1] = position_in[1];
@@ -54,7 +55,7 @@ Unit::Unit (
 
    min_job_dist2 = 3.01f; // greater than sqrt (3)
 
-   power = 0.2f;
+   power = 700.0f; // J/s
 
    residency[0] = 0;
    residency[1] = 0;
@@ -372,7 +373,7 @@ std::cout << __FILE__ << __LINE__ << ":resolved unit " << this << " invalid bloc
 
 void Unit::add_item (int type)
 {
-   items.push_front (new Item (type));
+//   items.push_front (new Item (type));
 }
 
 void Unit::assign_job (Job *job)
@@ -388,6 +389,13 @@ bool Unit::available_job_slots (void)
 void Unit::set_return_all_jobs (void)
 {
    jm.set_return_all_jobs ();
+}
+
+bool Unit::check_weight (int weight_in)
+{
+   if (weight + weight_in > max_weight) return false;
+
+   return true;
 }
 
 Job *Unit::pop_return_job (void)

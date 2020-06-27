@@ -221,6 +221,7 @@ std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued
    }
 
    // Assign jobs for units with available job slots
+
    Container<Unit> exclusion_units;
 
    bool job_assigned = false;

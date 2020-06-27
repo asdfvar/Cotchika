@@ -37,6 +37,7 @@ class Unit
       Job *pop_active_job (void) { return jm.pop_active_job (); };
       void set_return_all_jobs (void);
       Job *return_job (void)     { return jm.pop_return_job (); };
+      bool check_weight (int weight);
       virtual void draw (float *transform, float *translation) {};
 
    protected:
@@ -44,6 +45,7 @@ class Unit
       unsigned int tic;
 
       int              max_weight; // grams
+      int              weight;     // grams
 
       enum State_type { STANDBY, MOVING, FALLING };
       State_type       state;
@@ -51,7 +53,6 @@ class Unit
       float           *cost;
       float           *buffer;
       Job_manager      jm;
-      Container<Item>  items;
       int             *path;
       bool             trim_path_end;
       float            position[3];

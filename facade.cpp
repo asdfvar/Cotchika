@@ -284,7 +284,7 @@ void Facade::mouseClick (int button, int state, int x, int y)
             if (active_menu->lunclick (window[0], window[1]) == 1)
             {
                mode        = mode::BUILD;
-               jobmaterial = mid::dirt;
+               jobmaterial = mid::dry_dirt;
                active_menu = nullptr;
                hud.set_mode (mode);
             }

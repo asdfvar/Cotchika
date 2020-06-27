@@ -36,9 +36,7 @@ JobRemove::JobRemove (
 
    material = material_in;
 
-   if      (material == mid::stone) energy = 0.4f;
-   else if (material == mid::dirt)  energy = 0.2f;
-   else if (material == mid::grass) energy = 0.25f;
+   energy = mid::get_energy (material);
 }
 
 JobBuild::JobBuild (
@@ -50,7 +48,5 @@ JobBuild::JobBuild (
 
    material = material_in;
 
-   if      (material == mid::stone) energy = 0.4f;
-   else if (material == mid::dirt)  energy = 0.2f;
-   else if (material == mid::grass) energy = 0.25f;
+   energy = mid::get_energy (material);
 }

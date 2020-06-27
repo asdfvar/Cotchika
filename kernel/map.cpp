@@ -59,7 +59,7 @@ MAP::MAP (int size_in[3])
             if (ind_z == (int)perlin_array[ind2d])
                material[ind] = mid::grass;
             if ((int)perlin_array[ind2d] > ind_z && ind_z > (int)perlin_array[ind2d] - 6)
-               material[ind] = mid::dirt;
+               material[ind] = mid::dry_dirt;
             if ((int)perlin_array[ind2d] - 3 >= ind_z)
                material[ind] = mid::stone;
          }

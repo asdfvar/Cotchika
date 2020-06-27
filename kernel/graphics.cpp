@@ -89,7 +89,7 @@ void MAP::draw (float *transform, float *translation)
          } else {
             float scale = (1.0f - (float)view_depth[ind] / (float)max_depth);
             if (scale < 0.0f) scale = 0.0f;
-            if (view_plain[ind] == mid::dirt)
+            if (view_plain[ind] == mid::dry_dirt)
                glColor3f (0.3922f * scale, 0.2549f * scale, 0.0902f * scale); // UPS brown
             if (view_plain[ind] == mid::grass)
                glColor3f (0.4f * scale, 0.7f * scale, 0.2f * scale); // grass green

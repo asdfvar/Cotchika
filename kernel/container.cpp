@@ -412,6 +412,7 @@ template void  Container<Unit>::test_ends       (void      );
 template bool  Container<Unit>::test_duplicates (void      );
 template bool  Container<Unit>::test_nulls      (void      );
 
+#if 0
 // Define container types for the items class
 template void  Container<Item>::insert          (Item*, int);
 template void  Container<Item>::push_front      (Item*     );
@@ -426,6 +427,7 @@ template void  Container<Item>::list_contents   (void      );
 template void  Container<Item>::test_ends       (void      );
 template bool  Container<Item>::test_duplicates (void      );
 template bool  Container<Item>::test_nulls      (void      );
+#endif
 
 // Lattice for the Cell type
 template Lattice<Cell>::Lattice (int *size_in, int dim_in);

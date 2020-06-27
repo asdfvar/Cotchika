@@ -280,7 +280,7 @@ void Facade::mouseClick (int button, int state, int x, int y)
          // "build material" menu
          else if (active_menu->get_menu_id () == 3)
          {
-            // "Dirt" button
+            // "dry_Dirt" button
             if (active_menu->lunclick (window[0], window[1]) == 1)
             {
                mode        = mode::BUILD;

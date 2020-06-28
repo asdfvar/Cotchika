@@ -17,7 +17,8 @@ namespace mid
      dry_sand,
      wet_sand,
      grass,
-     stone };
+     stone,
+     num_types };
 
    // Density in g/m^3
    static int get_density (const unsigned int item)

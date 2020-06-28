@@ -255,7 +255,7 @@ std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued
          {
             Unit *unit = units.access (unit_index);
 
-            if (!unit->available_job_slots ()) continue;
+            if (!unit->can_take_job (job)) continue;
 
             unit_location[0] = (int)unit->get_position (0);
             unit_location[1] = (int)unit->get_position (1);
@@ -353,7 +353,7 @@ std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued
 
             if (job->get_type () == jid::BUILD)
             {
-               // TODO: unit->remove_item (...)
+               unit->remove_item (Map->get_material (flat_ind));
                Map->add_cell (job->get_material (), flat_ind);
             }
 

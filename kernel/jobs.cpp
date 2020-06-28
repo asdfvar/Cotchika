@@ -27,6 +27,13 @@ void Job::act (float Qin)
    if (work >= energy) complete = true;
 }
 
+int Job::get_weight (void)
+{
+   int density = mid::get_density (material);
+
+   return density * 1;
+}
+
 JobRemove::JobRemove (
       int flattened_index_in,
       int location_in[3],

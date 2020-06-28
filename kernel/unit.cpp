@@ -373,7 +373,12 @@ std::cout << __FILE__ << __LINE__ << ":resolved unit " << this << " invalid bloc
 
 void Unit::add_item (int type)
 {
-//   items.push_front (new Item (type));
+   weight += mid::get_density (type) * 1;
+}
+
+void Unit::remove_item (int type)
+{
+   weight -= mid::get_density (type) * 1;
 }
 
 void Unit::assign_job (Job *job)
@@ -384,6 +389,24 @@ void Unit::assign_job (Job *job)
 bool Unit::available_job_slots (void)
 {
    return jm.available_job_slots ();
+}
+
+bool Unit::can_take_job (Job *job)
+{
+   bool can_take = true;
+   can_take &= jm.available_job_slots ();
+
+   if (job->get_type () == jid::REMOVE) {
+      int job_weight = job->get_weight ();
+      can_take &= check_weight (job_weight);
+   }
+   else if (job->get_type () == jid::BUILD) {
+      int job_weight = job->get_weight ();
+      can_take &= weight >= job_weight ? true : false;
+      // TODO: check there's enough weight of the specified material
+   }
+
+   return can_take;
 }
 
 void Unit::set_return_all_jobs (void)

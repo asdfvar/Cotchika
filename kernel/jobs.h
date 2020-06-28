@@ -21,6 +21,7 @@ class Job
       int get_flattened_loc_index (void) { return flattened_loc_index; };
       int get_type (void) { return job_type; };
       unsigned int get_material (void) { return material; };
+      int get_weight (void);
       void act (float power);
 
    protected:

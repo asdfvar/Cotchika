@@ -26,10 +26,12 @@ class Unit
       bool is_selected (void) { return selected; };
       void update (float time_step);
       void add_item (int type);
+      void remove_item (int type);
       void assign_job (Job *job);
       Job *access_job (int ind) { return jm.access_job (ind); };
       Job *access_active_job (void) { return jm.access_active_job (); };
       bool available_job_slots (void);
+      bool can_take_job (Job*);
       int num_jobs (void) { return jm.num_jobs (); };
       int num_return_jobs (void) { return jm.num_return_jobs (); };
       int num_total_jobs (void) { return jm.num_total_jobs (); };

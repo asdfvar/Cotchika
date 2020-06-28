@@ -341,25 +341,8 @@ std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued
 
          int flat_ind = job->get_flattened_loc_index ();
 
-         bool unit_coincides = false;
-
-         // Check if there are any units at this index
-         for (int unit_ind2 = 0; unit_ind2 < units.size (); unit_ind2++)
-         {
-            Unit *unit = units.access (unit_ind2);
-            int unit_location[3] = {
-               (int)unit->get_position (0),
-               (int)unit->get_position (1),
-               (int)unit->get_position (2) };
-
-            int unit_flat_ind = dim_to_flat_ind (3, unit_location, size);
-
-            if (unit_flat_ind == flat_ind) unit_coincides = true;
-         }
-
-unit_coincides = false;
          // Complete the job if it's done and no other units conflict with its completion
-         if (job->is_complete () && !unit_coincides)
+         if (job->is_complete ())
          {
             // Perform the complete action for the job
             if (job->get_type () == jid::REMOVE)
@@ -377,7 +360,6 @@ unit_coincides = false;
             // Remove the job from the unit's list
             unit->pop_active_job ();
 
-std::cout << __FILE__ << __LINE__ << ":unit " << unit << " about to delete job " << job << " num jobs = " << unit->num_jobs () << std::endl;
             delete job;
          }
       }
@@ -385,13 +367,8 @@ std::cout << __FILE__ << __LINE__ << ":unit " << unit << " about to delete job "
       // Return all undoable jobs from this unit
       while (unit->num_return_jobs () > 0)
       {
-//bool duplicate = queued_jobs.test_duplicates ();
-//if (duplicate) std::cout << __FILE__ << __LINE__ << ":duplicate found here" << std::endl;
          Job *job = unit->return_job ();
-std::cout << __FILE__ << __LINE__ << ":returning unit " << unit << "'s job " << job << ". num queued jobs = " << queued_jobs.size() << std::endl;
          queued_jobs.push_front (job);
-//duplicate = queued_jobs.test_duplicates ();
-//if (duplicate) std::cout << __FILE__ << __LINE__ << ":duplicate found here" << std::endl;
       }
 
       // Update the unit's position and path planning

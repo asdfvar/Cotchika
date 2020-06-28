@@ -28,6 +28,12 @@ Unit::Unit (
 
    max_weight = 10000000; // 10,000,000 g
 
+   max_energy_storage = 1000.0f;
+   energy_stored      = max_energy_storage;
+   energy_cache       = 10.0f;
+   energy             = energy_cache;
+   recharge_rate      = 1.0f;
+
    for (int ind = 0; ind < mid::num_types; ind++) material_weights[ind] = 0;
 
    position[0] = position_in[0];
@@ -206,7 +212,6 @@ void Unit::update (float time_step)
          // Relinquish this unit from all its jobs
          jm.set_return_all_jobs ();
 
-std::cout << __FILE__ << __LINE__ << ":unit " << this << " is in an invalid block" << std::endl;
          int size[3] = {
             Map->shape (0),
             Map->shape (1),
@@ -367,6 +372,14 @@ std::cout << __FILE__ << __LINE__ << ":resolved unit " << this << " invalid bloc
       {
          state = STANDBY;
       }
+   }
+
+   // Update the energy reserves
+   if (energy <= energy_cache - recharge_rate * time_step &&
+         energy_stored >= recharge_rate * time_step)
+   {
+      energy        += recharge_rate * time_step;
+      energy_stored -= recharge_rate * time_step;
    }
 
    tic++;

@@ -46,8 +46,14 @@ class Unit
 
       unsigned int tic;
 
-      int              max_weight; // grams
-      int              material_weights[mid::num_types];
+      int max_weight; // grams
+      int material_weights[mid::num_types];
+
+      float max_energy_storage;
+      float energy_stored;
+      float energy_cache;
+      float energy;
+      float recharge_rate;
 
       enum State_type { STANDBY, MOVING, FALLING };
       State_type       state;

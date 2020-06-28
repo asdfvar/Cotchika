@@ -27,7 +27,8 @@ Unit::Unit (
    direction = 0.0f;
 
    max_weight = 10000000; // 10,000,000 g
-   weight     = 0;
+
+   for (int ind = 0; ind < mid::num_types; ind++) material_weights[ind] = 0;
 
    position[0] = position_in[0];
    position[1] = position_in[1];
@@ -373,12 +374,12 @@ std::cout << __FILE__ << __LINE__ << ":resolved unit " << this << " invalid bloc
 
 void Unit::add_item (int type)
 {
-   weight += mid::get_density (type) * 1;
+   material_weights[type] += mid::get_density (type) * 1;
 }
 
 void Unit::remove_item (int type)
 {
-   weight -= mid::get_density (type) * 1;
+   material_weights[type] -= mid::get_density (type) * 1;
 }
 
 void Unit::assign_job (Job *job)
@@ -400,10 +401,11 @@ bool Unit::can_take_job (Job *job)
       int job_weight = job->get_weight ();
       can_take &= check_weight (job_weight);
    }
+
    else if (job->get_type () == jid::BUILD) {
+      int material = job->get_material ();
       int job_weight = job->get_weight ();
-      can_take &= weight >= job_weight ? true : false;
-      // TODO: check there's enough weight of the specified material
+      can_take &= material_weights[material] >= job_weight ? true : false;
    }
 
    return can_take;
@@ -416,13 +418,36 @@ void Unit::set_return_all_jobs (void)
 
 bool Unit::check_weight (int weight_in)
 {
+   int weight = 0;
+   for (int ind = 0; ind < mid::num_types; ind++) weight += material_weights[ind];
+
    if (weight + weight_in > max_weight) return false;
 
    return true;
 }
 
+Job *Unit::pop_active_job (void)
+{
+   Job *job = jm.pop_active_job ();
+
+   int material   = job->get_material ();
+   int job_weight = job->get_weight ();
+
+   if (job->get_type () == jid::REMOVE) {
+      material_weights[material] += job_weight;
+   }
+
+   if (job->get_type () == jid::BUILD) {
+      material_weights[material] -= job_weight;
+   }
+
+   return job;
+}
+
 Job *Unit::pop_return_job (void)
 {
    state      = STANDBY;
-   return jm.pop_return_job ();
+   Job *job = jm.pop_return_job ();
+
+   return job;
 }

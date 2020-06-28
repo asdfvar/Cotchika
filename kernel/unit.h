@@ -35,8 +35,8 @@ class Unit
       int num_jobs (void) { return jm.num_jobs (); };
       int num_return_jobs (void) { return jm.num_return_jobs (); };
       int num_total_jobs (void) { return jm.num_total_jobs (); };
+      Job *pop_active_job (void);
       Job *pop_return_job (void);
-      Job *pop_active_job (void) { return jm.pop_active_job (); };
       void set_return_all_jobs (void);
       Job *return_job (void)     { return jm.pop_return_job (); };
       bool check_weight (int weight);
@@ -47,7 +47,7 @@ class Unit
       unsigned int tic;
 
       int              max_weight; // grams
-      int              weight;     // grams
+      int              material_weights[mid::num_types];
 
       enum State_type { STANDBY, MOVING, FALLING };
       State_type       state;

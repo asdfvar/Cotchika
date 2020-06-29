@@ -85,6 +85,14 @@ void Facade::keyboardDown (const char key, int x, int y)
       if (mode == mode::REMOVE) society.set_jobs (jid::REMOVE, 0);
       if (mode == mode::BUILD ) society.set_jobs (jid::BUILD, jobmaterial);
 
+      selection_box[0][0] = 0.0f;
+      selection_box[0][1] = 0.0f;
+      selection_box[0][2] = 0.0f;
+
+      selection_box[1][0] = 0.0f;
+      selection_box[1][1] = 0.0f;
+      selection_box[1][2] = 0.0f;
+
       mode = mode::NONE;
    }
 

@@ -247,6 +247,16 @@ void Facade::mouseClick (int button, int state, int x, int y)
    int window_width  = glutGet (GLUT_WINDOW_WIDTH);
    int window_height = glutGet (GLUT_WINDOW_HEIGHT);
 
+   int min_aspect = window_width < window_height ? window_width : window_height;
+   float adjust_aspect_ratio[4] = {
+      (float)window_height / (float)min_aspect , 0.0f,
+      0.0f,                   (float)window_width / (float)min_aspect };
+   float result_transform[4];
+   result_transform[0] = adjust_aspect_ratio[0] * transform[0] + adjust_aspect_ratio[1] * transform[2];
+   result_transform[1] = adjust_aspect_ratio[0] * transform[1] + adjust_aspect_ratio[1] * transform[3];
+   result_transform[2] = adjust_aspect_ratio[2] * transform[0] + adjust_aspect_ratio[3] * transform[2];
+   result_transform[3] = adjust_aspect_ratio[2] * transform[1] + adjust_aspect_ratio[3] * transform[3];
+
    float window[2];
    window[0] =        2.0f * (float)x / (float)window_width - 1.0f;
    window[1] = 1.0f - 2.0f * (float)y / (float)window_height;
@@ -317,11 +327,11 @@ void Facade::mouseClick (int button, int state, int x, int y)
    // Set the destination for the selected units
    if (button == 0 && state == 1 && z_down == false && has_moved_passively == true)
    {
-      const float det = transform[0] * transform[3] - transform[1] * transform[2];
+      const float det = result_transform[0] * result_transform[3] - result_transform[1] * result_transform[2];
       const float invDet = 1.0f / det;
 
-      const float inv_transform[4] = { invDet * transform[3], -invDet * transform[1],
-         -invDet * transform[2],  invDet * transform[0] };
+      const float inv_transform[4] = { invDet * result_transform[3], -invDet * result_transform[1],
+         -invDet * result_transform[2],  invDet * result_transform[0] };
 
       float temp = window[0];
 
@@ -447,6 +457,16 @@ void Facade::mouseMotion (int x, int y)
    int window_width  = glutGet (GLUT_WINDOW_WIDTH);
    int window_height = glutGet (GLUT_WINDOW_HEIGHT);
 
+   int min_aspect = window_width < window_height ? window_width : window_height;
+   float adjust_aspect_ratio[4] = {
+      (float)window_height / (float)min_aspect , 0.0f,
+      0.0f,                   (float)window_width / (float)min_aspect };
+   float result_transform[4];
+   result_transform[0] = adjust_aspect_ratio[0] * transform[0] + adjust_aspect_ratio[1] * transform[2];
+   result_transform[1] = adjust_aspect_ratio[0] * transform[1] + adjust_aspect_ratio[1] * transform[3];
+   result_transform[2] = adjust_aspect_ratio[2] * transform[0] + adjust_aspect_ratio[3] * transform[2];
+   result_transform[3] = adjust_aspect_ratio[2] * transform[1] + adjust_aspect_ratio[3] * transform[3];
+
    float fx = (float)(2 * x - window_width) / (float)window_width;
    float fy = (float)(window_height - 2 * y) / (float)window_height;
 
@@ -456,12 +476,12 @@ void Facade::mouseMotion (int x, int y)
    delta[0] = (float)diff[0] / (float)window_width;
    delta[1] = (float)diff[1] / (float)window_height;
 
-   const float det = transform[0] * transform[3] - transform[1] * transform[2];
+   const float det = result_transform[0] * result_transform[3] - result_transform[1] * result_transform[2];
    const float invDet = 1.0f / det;
 
    const float inv_transform[4] = {
-      invDet * transform[3], -invDet * transform[1],
-      -invDet * transform[2],  invDet * transform[0] };
+      invDet * result_transform[3], -invDet * result_transform[1],
+      -invDet * result_transform[2],  invDet * result_transform[0] };
 
    // Adjust the translation of the world
    if (z_down == false && button0_down == true)
@@ -545,15 +565,15 @@ void Facade::mouseMotion (int x, int y)
 
       float temp[4];
 
-      temp[0] = transform[0] * costh    + transform[1] * sinth;
-      temp[1] = transform[0] * (-sinth) + transform[1] * costh;
-      temp[2] = transform[2] * costh    + transform[3] * sinth;
-      temp[3] = transform[2] * (-sinth) + transform[3] * costh;
+      temp[0] = result_transform[0] * costh    + result_transform[1] * sinth;
+      temp[1] = result_transform[0] * (-sinth) + result_transform[1] * costh;
+      temp[2] = result_transform[2] * costh    + result_transform[3] * sinth;
+      temp[3] = result_transform[2] * (-sinth) + result_transform[3] * costh;
 
-      transform[0] = temp[0];
-      transform[1] = temp[1];
-      transform[2] = temp[2];
-      transform[3] = temp[3];
+      result_transform[0] = temp[0];
+      result_transform[1] = temp[1];
+      result_transform[2] = temp[2];
+      result_transform[3] = temp[3];
    }
 
    // Shear the world map
@@ -563,8 +583,8 @@ void Facade::mouseMotion (int x, int y)
 
       if (inv_norm_f < 0.001f) inv_norm_f = 0.001f;
 
-      transform[1] += 2.0f * inv_norm_f * delta[0];
-      transform[2] += 2.0f * inv_norm_f * delta[1];
+      result_transform[1] += 2.0f * inv_norm_f * delta[0];
+      result_transform[2] += 2.0f * inv_norm_f * delta[1];
    }
 
    mouse_pos[0] = x;
@@ -610,16 +630,29 @@ void Facade::display (void)
    // clear this openGL buffer
    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+   int window_width  = glutGet (GLUT_WINDOW_WIDTH);
+   int window_height = glutGet (GLUT_WINDOW_HEIGHT);
+
+   int min_aspect = window_width < window_height ? window_width : window_height;
+   float adjust_aspect_ratio[4] = {
+      (float)window_height / (float)min_aspect , 0.0f,
+      0.0f,                   (float)window_width / (float)min_aspect };
+   float result_transform[4];
+   result_transform[0] = adjust_aspect_ratio[0] * transform[0] + adjust_aspect_ratio[1] * transform[2];
+   result_transform[1] = adjust_aspect_ratio[0] * transform[1] + adjust_aspect_ratio[1] * transform[3];
+   result_transform[2] = adjust_aspect_ratio[2] * transform[0] + adjust_aspect_ratio[3] * transform[2];
+   result_transform[3] = adjust_aspect_ratio[2] * transform[1] + adjust_aspect_ratio[3] * transform[3];
+
    if (selection_active == true)
    {
       graphics.draw_selection_box (
             selection_box,
-            transform,
+            result_transform,
             translation);
    }
 
    society.draw (
-         transform,
+         result_transform,
          translation,
          map_layer);
 

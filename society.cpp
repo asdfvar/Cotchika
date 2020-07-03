@@ -550,16 +550,16 @@ void Society::set_jobs (int job_type, unsigned int jobmaterial)
 
             if (job_type == jid::REMOVE) {
                Job *job = new JobRemove (ind, location, Map->get_material (location));
-std::cout << __FILE__ << __LINE__ << "creating new REMOVE job " << job << " to append to the jobs list. num queued jobs = " << queued_jobs.size () << std::endl;
                queued_jobs.push_front (job);
             }
             else if (job_type == jid::BUILD) {
                Job *job = new JobBuild (ind, location, jobmaterial);
-std::cout << __FILE__ << __LINE__ << "creating new BUILD job " << job << " to append to the jobs list. num queued jobs = " << queued_jobs.size () << std::endl;
                queued_jobs.push_front (job);
             }
             else
-               std::cout << __FILE__ << __LINE__ << ":job ID not supported, resolve this" << std::endl;
+               std::cout << __FILE__ << __LINE__
+                  << ":job ID not supported, resolve this"
+                  << std::endl;
          }
       }
    }

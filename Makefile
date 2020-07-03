@@ -31,15 +31,18 @@ EXE = whee
 .NOTPARALLEL: all
 
 all: directories $(OBJS)
-	cd menu_system && $(MAKE) -f menu_system.mk
-	$(CC) $(OBJS) $(FLAGS) $(LIBPATHS) $(LIBS) -o $(EXE)
+	@cd menu_system && $(MAKE) -f menu_system.mk
+	@echo "linking $(EXE)"
+	@$(CC) $(OBJS) $(FLAGS) $(LIBPATHS) $(LIBS) -o $(EXE)
 
 directories:
 	mkdir -p $(OBJDIR)
 
 clean:
 	$(MAKE) -C menu_system -f menu_system.mk clean
-	rm $(OBJS) $(EXE)
+	@rm -r $(OBJDIR) $(EXE)
+	@echo "$(EXE) cleaned"
 
 $(OBJDIR)/%.o: %.cpp
-	$(CC) $(INC) $(FLAGS) $^ $(DIRECTIVES) -c -o $@
+	@echo "compiling $^"
+	@$(CC) $(INC) $(FLAGS) $^ $(DIRECTIVES) -c -o $@

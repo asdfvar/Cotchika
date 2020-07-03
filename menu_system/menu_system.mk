@@ -16,14 +16,16 @@ OBJS = $(OBJDIR)/menu_system.o         \
 LIBNAME = libmenu_system.a
 
 all: directories $(OBJS)
-	ar rcs $(LIBNAME) $(OBJS)
+	@echo "archiving $(LIBNAME)"
+	@ar rcs $(LIBNAME) $(OBJS)
 
 directories:
 	@mkdir -p $(OBJDIR)
 
 clean:
-	rm -r $(OBJDIR) $(LIBNAME)
-	@echo "cleaned menu system library"
+	@rm -r $(OBJDIR) $(LIBNAME)
+	@echo "cleaned menu-system library"
 
 $(OBJDIR)/%.o: %.cpp
-	$(CC) $^ $(DIRECTIVES) $(INC) -c -o $@
+	@echo "compiling $^"
+	@$(CC) $^ $(DIRECTIVES) $(INC) -c -o $@

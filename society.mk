@@ -1,4 +1,4 @@
-BASE_DIR = ../
+BASE_DIR = ./
 
 include $(BASE_DIR)/directives.mk
 

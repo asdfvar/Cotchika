@@ -1,12 +1,11 @@
 BASE_DIR = ../
-
 include $(BASE_DIR)/directives.mk
 
 CC = g++
 
 OBJDIR = objdir
 
-INC = -I$(BASE_DIR)/graphics/
+INC = -I$(BASE_DIR)
 
 OBJS = $(OBJDIR)/menu_system.o         \
        $(OBJDIR)/main_menu.o           \

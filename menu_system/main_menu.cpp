@@ -54,7 +54,7 @@ void MainMenu::translate (float dx, float dy)
 
 void MainMenu::show (void)
 {
-   BaseMenu::show_buttons (ul);
+   BaseMenu::show_components (ul);
 
    glEnable (GL_BLEND);
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -67,6 +67,4 @@ void MainMenu::show (void)
    glVertex3f (ul[0] + width, ul[1] - height, -0.2f);
    glVertex3f (ul[0],         ul[1] - height, -0.2f);
    glEnd ();
-
-   menuBar.show (ul, width);
 }

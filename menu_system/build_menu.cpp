@@ -45,7 +45,7 @@ int BuildMenu::get_menu_id (void)
 
 void BuildMenu::show (void)
 {
-   BaseMenu::show_buttons (ul);
+   BaseMenu::show_components (ul);
 
    glEnable (GL_BLEND);
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -58,8 +58,6 @@ void BuildMenu::show (void)
    glVertex3f (ul[0] + width, ul[1] - height, -0.2f);
    glVertex3f (ul[0],         ul[1] - height, -0.2f);
    glEnd ();
-
-   menuBar.show (ul, width);
 }
 
 void BuildMenu::translate (float dx, float dy)

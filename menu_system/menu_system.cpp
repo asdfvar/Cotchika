@@ -79,7 +79,7 @@ void BaseMenu::add_button (const std::string input_text)
 
 int BaseMenu::lclick (float x, float y)
 {
-   hit_menuBar = false;
+   if (menuBar.hit (x, y, ul, width)) hit_menuBar = true;
 
    int it = 1;
    for (auto button = buttons.begin (); button != buttons.end (); button++, it++)
@@ -103,10 +103,12 @@ int BaseMenu::lunclick (float x, float y)
    return 0;
 }
 
-void BaseMenu::show_buttons (float ul[2])
+void BaseMenu::show_components (float ul[2])
 {
    for (auto button = buttons.begin (); button != buttons.end (); button++)
       button->show (ul);
+
+   menuBar.show (ul, width);
 }
 
 void MenuBar::show (float ul[2], float width)

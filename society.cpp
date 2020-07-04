@@ -346,13 +346,11 @@ void Society::update (float time_step)
             // Perform the complete action for the job
             if (job->get_type () == jid::REMOVE)
             {
-//               unit->add_item (Map->get_material (flat_ind));
                Map->remove_cell (flat_ind);
             }
 
             if (job->get_type () == jid::BUILD)
             {
-//               unit->remove_item (Map->get_material (flat_ind));
                Map->add_cell (job->get_material (), flat_ind);
             }
 

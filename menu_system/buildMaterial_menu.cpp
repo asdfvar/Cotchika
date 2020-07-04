@@ -45,9 +45,8 @@ int BuildMaterialMenu::get_menu_id (void)
 
 void BuildMaterialMenu::show (void)
 {
-   // Draw the remove-button menu
-   button_dirt->show  (ul);
-   button_stone->show (ul);
+   for (auto button = buttons.begin (); button != buttons.end (); button++)
+      button->show (ul);
 
    glEnable (GL_BLEND);
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

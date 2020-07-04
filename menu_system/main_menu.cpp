@@ -54,9 +54,8 @@ void MainMenu::translate (float dx, float dy)
 
 void MainMenu::show (void)
 {
-   // Draw the remove-button menu
-   button_remove->show (ul);
-   button_build->show  (ul);
+   for (auto button = buttons.begin (); button != buttons.end (); button++)
+      button->show (ul);
 
    glEnable (GL_BLEND);
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

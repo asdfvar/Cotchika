@@ -215,7 +215,6 @@ void Society::update (float time_step)
       Unit *unit = units.access (unit_ind);
       if (unit->num_return_jobs () > 0) {
          Job *job = unit->pop_return_job ();
-std::cout << __FILE__ << __LINE__ << ":returning job " << job << " to the queued jobs" << std::endl;
          queued_jobs.push_front (job);
       }
    }

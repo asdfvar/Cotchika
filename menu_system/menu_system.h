@@ -7,6 +7,7 @@
 #include <GL/gl.h>
 #include <GL/glext.h>
 #include <iostream>
+#include <list>
 
 class MenuSystem
 {
@@ -74,6 +75,7 @@ class BaseMenu : public MenuSystem
 
       virtual int  lclick      (float x, float y) { return false; };
       virtual int  lunclick    (float x, float y) { return false; };
+//      int  lunclick    (float x, float y);
       virtual int  get_menu_id (void) { return 0; };
       virtual void translate   (float dx, float dy) { };
 
@@ -83,6 +85,10 @@ class BaseMenu : public MenuSystem
       int     menu_id;
       MenuBar menuBar;
       bool    hit_menuBar;
+
+      void add_button (const std::string input_text);
+
+      std::list<Button> buttons;
 };
 
 class MainMenu : public BaseMenu

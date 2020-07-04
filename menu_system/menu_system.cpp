@@ -58,6 +58,25 @@ void Button::show (float menu_ul[2])
 
 MenuBar::MenuBar (void) : MenuSystem () { }
 
+void BaseMenu::add_button (const std::string input_text)
+{
+   float button_width = 0.2f;
+   float button_height = 0.1f;
+
+   float button_ul[2];
+
+   button_ul[0] =  0.02f;
+   button_ul[1] = -0.09f;
+
+   float step = -0.11f;
+
+   button_ul[1] += (float)buttons.size () * step;
+
+   Button button (input_text, button_ul, button_width, button_height);
+
+   buttons.push_back (button);
+}
+
 void MenuBar::show (float ul[2], float width)
 {
    // draw the boundary of the button

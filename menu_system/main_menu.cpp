@@ -27,6 +27,9 @@ MainMenu::MainMenu (void) : BaseMenu ()
    button_ul[1] = -0.2f;
 
    button_build  = new Button ("build", button_ul, button_width, button_height);
+
+   add_button ("remove");
+   add_button ("build");
 }
 
 MainMenu::~MainMenu (void)
@@ -57,11 +60,11 @@ int MainMenu::lunclick (float x, float y)
 {
    hit_menuBar = false;
 
-   if (button_remove->lunclick (x, y, ul))
-      return 1;
-
-   if (button_build->lunclick (x, y, ul))
-      return 2;
+   int it = 1;
+   for (auto button = buttons.begin (); button != buttons.end (); button++, it++)
+   {
+      if (button->lunclick (x, y, ul)) return it;
+   }
 
    return 0;
 }

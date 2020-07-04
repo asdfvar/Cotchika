@@ -103,6 +103,12 @@ int BaseMenu::lunclick (float x, float y)
    return 0;
 }
 
+void BaseMenu::show_buttons (float ul[2])
+{
+   for (auto button = buttons.begin (); button != buttons.end (); button++)
+      button->show (ul);
+}
+
 void MenuBar::show (float ul[2], float width)
 {
    // draw the boundary of the button

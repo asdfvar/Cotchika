@@ -45,8 +45,7 @@ int BuildMenu::get_menu_id (void)
 
 void BuildMenu::show (void)
 {
-   for (auto button = buttons.begin (); button != buttons.end (); button++)
-      button->show (ul);
+   BaseMenu::show_buttons (ul);
 
    glEnable (GL_BLEND);
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

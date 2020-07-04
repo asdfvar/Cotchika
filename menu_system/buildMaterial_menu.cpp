@@ -27,6 +27,9 @@ BuildMaterialMenu::BuildMaterialMenu (void) : BaseMenu ()
    button_ul[1] = -0.2f;
 
    button_stone = new Button ("stone", button_ul, button_width, button_height);
+
+   add_button ("dirt" );
+   add_button ("stone");
 }
 
 BuildMaterialMenu::~BuildMaterialMenu (void)
@@ -67,16 +70,6 @@ int BuildMaterialMenu::lclick (float x, float y)
 
    if (button_dirt->lclick  (x, y, ul)) return 1;
    if (button_stone->lclick (x, y, ul)) return 2;
-
-   return 0;
-}
-
-int BuildMaterialMenu::lunclick (float x, float y)
-{
-   hit_menuBar = false;
-
-   if (button_dirt->lunclick  (x, y, ul)) return 1;
-   if (button_stone->lunclick (x, y, ul)) return 2;
 
    return 0;
 }

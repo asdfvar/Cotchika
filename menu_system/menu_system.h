@@ -74,8 +74,7 @@ class BaseMenu : public MenuSystem
       BaseMenu (void) : MenuSystem () { hit_menuBar = false; };
 
       virtual int  lclick      (float x, float y) { return false; };
-      virtual int  lunclick    (float x, float y) { return false; };
-//      int  lunclick    (float x, float y);
+      int  lunclick    (float x, float y);
       virtual int  get_menu_id (void) { return 0; };
       virtual void translate   (float dx, float dy) { };
 
@@ -100,7 +99,6 @@ class MainMenu : public BaseMenu
 
       int  get_menu_id (void)               override;
       int  lclick      (float x,  float y ) override;
-      int  lunclick    (float x,  float y ) override;
       void translate   (float dx, float dy) override;
       void show        (void)               override;
 
@@ -119,7 +117,6 @@ class BuildMenu : public BaseMenu
 
       int  get_menu_id (void)               override;
       int  lclick      (float x,  float y ) override;
-      int  lunclick    (float x,  float y ) override;
       void translate   (float dx, float dy) override;
       void show        (void)               override;
 
@@ -138,7 +135,6 @@ class BuildMaterialMenu : public BaseMenu
 
       int  get_menu_id (void)               override;
       int  lclick      (float x,  float y ) override;
-      int  lunclick    (float x,  float y ) override;
       void translate   (float dx, float dy) override;
       void show        (void)               override;
 

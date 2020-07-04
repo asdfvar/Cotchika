@@ -56,19 +56,6 @@ int MainMenu::lclick (float x, float y)
    return 0;
 }
 
-int MainMenu::lunclick (float x, float y)
-{
-   hit_menuBar = false;
-
-   int it = 1;
-   for (auto button = buttons.begin (); button != buttons.end (); button++, it++)
-   {
-      if (button->lunclick (x, y, ul)) return it;
-   }
-
-   return 0;
-}
-
 void MainMenu::translate (float dx, float dy)
 {
    if (hit_menuBar)

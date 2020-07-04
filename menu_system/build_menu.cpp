@@ -27,6 +27,9 @@ BuildMenu::BuildMenu (void) : BaseMenu ()
    button_ul[1] = -0.2f;
 
    button_item  = new Button ("item", button_ul, button_width, button_height);
+
+   add_button ("material");
+   add_button ("item"    );
 }
 
 BuildMenu::~BuildMenu (void)
@@ -69,19 +72,6 @@ int BuildMenu::lclick (float x, float y)
       return 1;
 
    if (button_item->lclick (x, y, ul))
-      return 2;
-
-   return 0;
-}
-
-int BuildMenu::lunclick (float x, float y)
-{
-   hit_menuBar = false;
-
-   if (button_material->lunclick (x, y, ul))
-      return 1;
-
-   if (button_item->lunclick (x, y, ul))
       return 2;
 
    return 0;

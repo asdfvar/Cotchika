@@ -64,16 +64,6 @@ void BuildMaterialMenu::show (void)
    menuBar.show (ul, width);
 }
 
-int BuildMaterialMenu::lclick (float x, float y)
-{
-   if (menuBar.hit (x, y, ul, width)) hit_menuBar = true;
-
-   if (button_dirt->lclick  (x, y, ul)) return 1;
-   if (button_stone->lclick (x, y, ul)) return 2;
-
-   return 0;
-}
-
 void BuildMaterialMenu::translate (float dx, float dy)
 {
    if (hit_menuBar)

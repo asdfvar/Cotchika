@@ -29,7 +29,7 @@ MainMenu::MainMenu (void) : BaseMenu ()
    button_build  = new Button ("build", button_ul, button_width, button_height);
 
    add_button ("remove");
-   add_button ("build");
+   add_button ("build" );
 }
 
 MainMenu::~MainMenu (void)
@@ -42,19 +42,6 @@ int MainMenu::get_menu_id (void)
 {
    return menu_id;
 };
-
-int MainMenu::lclick (float x, float y)
-{
-   if (menuBar.hit (x, y, ul, width)) hit_menuBar = true;
-
-   if (button_remove->lclick (x, y, ul))
-      return 1;
-
-   if (button_build->lclick (x, y, ul))
-      return 2;
-
-   return 0;
-}
 
 void MainMenu::translate (float dx, float dy)
 {

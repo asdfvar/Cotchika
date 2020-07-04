@@ -64,19 +64,6 @@ void BuildMenu::show (void)
    menuBar.show (ul, width);
 }
 
-int BuildMenu::lclick (float x, float y)
-{
-   if (menuBar.hit (x, y, ul, width)) hit_menuBar = true;
-
-   if (button_material->lclick (x, y, ul))
-      return 1;
-
-   if (button_item->lclick (x, y, ul))
-      return 2;
-
-   return 0;
-}
-
 void BuildMenu::translate (float dx, float dy)
 {
    if (hit_menuBar)

@@ -222,7 +222,6 @@ void Unit::update (float time_step)
          position[0] = static_cast<float> (flat_ind_to_dim (0, flat_ind, size));
          position[1] = static_cast<float> (flat_ind_to_dim (1, flat_ind, size));
          position[2] = static_cast<float> (flat_ind_to_dim (2, flat_ind, size));
-std::cout << __FILE__ << __LINE__ << ":resolved unit " << this << " invalid block issue" << std::endl;
       }
 
       // Check for internal queued jobs

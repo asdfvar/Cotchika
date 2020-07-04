@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <climits>
+#include <float.h>
 
 #define MAX(A,B) ((A) > (B) ? (A) : (B))
 #define MIN(A,B) ((A) < (B) ? (A) : (B))
@@ -207,9 +208,6 @@ void Society::update (float time_step)
    const bool  *ground_map = Map->access_ground ();
    const float *weight     = Map->access_weight ();
 
-   float *cost         = fbuffer;
-   float *local_buffer = fbuffer + size[0] * size[1] * size[2];
-
    // Return any jobs the unit has if any
    for (int unit_ind = 0; unit_ind < units.size (); unit_ind++) {
       Unit *unit = units.access (unit_ind);
@@ -242,6 +240,9 @@ void Society::update (float time_step)
       // this is cheaper than the path planning approach below
       if (Map->is_enclosed_ground_cell (job_location_cell)) continue;
 
+      float *job_cost = fbuffer;
+      for (int ind = 0; ind < units.size (); ind++) job_cost[ind] = FLT_MAX;
+
       for (int test_unit_index = 0; test_unit_index < units.size () && !job_assigned; test_unit_index++)
       {
          Unit *candidate_unit = nullptr;
@@ -261,10 +262,8 @@ void Society::update (float time_step)
             unit_location[2] = (int)unit->get_position (2);
 
             bool exclude = false;
-            // loop through exclusion_units
-            for (int ex_unit_index = 0;
-                  ex_unit_index < exclusion_units.size ();
-                  ++ex_unit_index) {
+            // loop through exclusion_units and test if this unit is one of them
+            for (int ex_unit_index = 0; ex_unit_index < exclusion_units.size (); ex_unit_index++) {
 
                Unit *ex_unit = exclusion_units.access (ex_unit_index);
                if (candidate_unit == ex_unit) {
@@ -272,8 +271,9 @@ void Society::update (float time_step)
                   break;
                }
             }
-
             if (exclude) continue;
+
+            job_cost[unit_index] = 0.0f;
 
             int dist2 = 
                (job_location_cell[0] - unit_location[0]) *
@@ -287,13 +287,32 @@ void Society::update (float time_step)
                min_dist       = dist2;
                candidate_unit = unit;
             }
+
+            // Scalar factors to adjust the weights to the job costs
+            const float factors[2] = { 1.0f, 100.0f };
+
+            job_cost[unit_index] += factors[0] * (float)dist2;
+            job_cost[unit_index] += factors[1] * (float)unit->num_jobs ();
          }
+
+         float min_cost = FLT_MAX;
+         int min_ind = 0;
+         for (int unit_index = 0; unit_index < units.size (); unit_index++) {
+            if (job_cost[unit_index] < min_cost) {
+               min_cost = job_cost[unit_index];
+               min_ind = unit_index;
+            }
+         }
+         if (min_cost < FLT_MAX) candidate_unit = units.access (min_ind);
 
          if (candidate_unit == nullptr) continue;
 
          bool accessible = false;
 
          const int max_cost_length = size[0] + size[1] + size[2];
+
+         float *cost         = fbuffer;
+         float *local_buffer = fbuffer + size[0] * size[1] * size[2];
 
          // test the candidate unit to see if it can access the job
          // test if this cell is accessible to the unit

@@ -28,8 +28,6 @@ OBJS = \
 
 EXE = whee
 
-.NOTPARALLEL: all
-
 all: directories $(OBJS)
 	@cd menu_system && $(MAKE) -f menu_system.mk
 	@echo "linking $(EXE)"

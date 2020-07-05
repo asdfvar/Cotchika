@@ -36,7 +36,7 @@ namespace mid
       else if (item == mid::mud       ) density = 1730000;
       else if (item == mid::dry_sand  ) density = 1555000;
       else if (item == mid::wet_sand  ) density = 1905000;
-      else if (item == mid::grass     ) density = 1250000;
+      else if (item == mid::grass     ) density = get_density (mid::dry_dirt);
       else if (item == mid::stone     ) density = 2480000;
 
       return density;

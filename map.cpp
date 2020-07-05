@@ -182,7 +182,12 @@ unsigned int MAP::get_material (int ind[3])
       ind[1] * size[0]           +
       ind[0];
 
-   return material[flattened_ind];
+   unsigned int result_material = material[flattened_ind];
+
+   // Special cases
+   if (result_material == mid::grass) result_material = mid::dry_dirt;
+
+   return result_material;
 }
 
 bool MAP::is_enclosed_ground_cell (int ind[3])

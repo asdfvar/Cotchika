@@ -35,7 +35,7 @@ bool Button::lunclick (float x, float y, float menu_ul[2])
    return false;
 }
 
-void Button::show (float menu_ul[2])
+void Button::show (float menu_ul[2], float *transform, float *translation)
 {
    text.display_contents (
          menu_ul[0] + ul[0], // x
@@ -103,15 +103,15 @@ int BaseMenu::lunclick (float x, float y)
    return 0;
 }
 
-void BaseMenu::show_components (float ul[2])
+void BaseMenu::show_components (float ul[2], float *transform, float *translation)
 {
    for (auto button = buttons.begin (); button != buttons.end (); button++)
-      button->show (ul);
+      button->show (ul, transform, translation);
 
-   menuBar.show (ul, width);
+   menuBar.show (ul, width, transform, translation);
 }
 
-void MenuBar::show (float ul[2], float width)
+void MenuBar::show (float ul[2], float width, float *transform, float *translation)
 {
    // draw the boundary of the button
    glEnable (GL_BLEND);

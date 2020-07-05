@@ -2,6 +2,7 @@
 #define MENU_SYSTEM_H
 
 #include "text.h"
+#include "utils.h"
 #include <GL/glut.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
@@ -33,7 +34,7 @@ class MenuSystem
          ul[1] += dy;
       }
 
-      virtual void show        (void) { };
+      virtual void show        (float *tranform, float *translation) { };
 
    protected:
 
@@ -50,7 +51,7 @@ class Button : public MenuSystem
       Button (const std::string input_text, float ul_in[2], float width_in, float height_in);
       bool lclick   (float x, float y, float ul[2]);
       bool lunclick (float x, float y, float ul[2]);
-      void show     (float ul[2]);
+      void show     (float ul[2], float *transform, float *translation);
 
   private:
 
@@ -63,7 +64,7 @@ class MenuBar : public MenuSystem
    public:
 
       MenuBar (void);
-      void show (float ul[2], float width);
+      void show (float ul[2], float width, float *transform, float *translation);
       bool hit  (float x, float y, float ul[2], float width);
 };
 
@@ -77,7 +78,7 @@ class BaseMenu : public MenuSystem
       int  lunclick    (float x, float y);
       virtual int  get_menu_id (void) { return 0; };
       virtual void translate   (float dx, float dy) { };
-      void show_components (float ul[2]);
+      void show_components (float ul[2], float *transform, float *translation);
 
    protected:
 

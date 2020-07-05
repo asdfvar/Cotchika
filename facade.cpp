@@ -634,9 +634,11 @@ void Facade::display (void)
    int window_height = glutGet (GLUT_WINDOW_HEIGHT);
 
    int min_aspect = window_width < window_height ? window_width : window_height;
+
    float adjust_aspect_ratio[4] = {
       (float)window_height / (float)min_aspect , 0.0f,
-      0.0f,                   (float)window_width / (float)min_aspect };
+      0.0f,                                      (float)window_width / (float)min_aspect };
+
    float result_transform[4];
    result_transform[0] = adjust_aspect_ratio[0] * transform[0] + adjust_aspect_ratio[1] * transform[2];
    result_transform[1] = adjust_aspect_ratio[0] * transform[1] + adjust_aspect_ratio[1] * transform[3];
@@ -658,8 +660,11 @@ void Facade::display (void)
 
    hud.draw_info ();
 
+   float menu_transform[4]   = { 1.0f, 0.0f, 0.0f, 1.0f };
+   float menu_translation[2] = { 0.0f, 0.0f };
+
    if (active_menu != nullptr) {
-      active_menu->show ();
+      active_menu->show (menu_transform, menu_translation);
    }
 
    // swap this buffer for the old one

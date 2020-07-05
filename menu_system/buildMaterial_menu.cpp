@@ -13,30 +13,11 @@ BuildMaterialMenu::BuildMaterialMenu (void) : BaseMenu ()
    width  = 0.3f;
    height = 0.3f;
 
-   float button_width = 0.25f;
-   float button_height = 0.1f;
-
-   float button_ul[2];
-
-   button_ul[0] =  0.02f;
-   button_ul[1] = -0.09f;
-
-   button_dirt  = new Button ("dirt",  button_ul, button_width, button_height);
-
-   button_ul[0] =  0.02f;
-   button_ul[1] = -0.2f;
-
-   button_stone = new Button ("stone", button_ul, button_width, button_height);
-
    add_button ("dirt" );
    add_button ("stone");
 }
 
-BuildMaterialMenu::~BuildMaterialMenu (void)
-{
-   delete button_dirt;
-   delete button_stone;
-}
+BuildMaterialMenu::~BuildMaterialMenu (void) { /* pass */ }
 
 int BuildMaterialMenu::get_menu_id (void)
 {

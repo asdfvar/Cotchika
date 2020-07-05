@@ -13,30 +13,11 @@ MainMenu::MainMenu (void) : BaseMenu ()
    width  = 0.25f;
    height = 0.3f;
 
-   float button_width = 0.2f;
-   float button_height = 0.1f;
-
-   float button_ul[2];
-
-   button_ul[0] =  0.02f;
-   button_ul[1] = -0.09f;
-
-   button_remove = new Button ("remove", button_ul, button_width, button_height);
-
-   button_ul[0] =  0.02f;
-   button_ul[1] = -0.2f;
-
-   button_build  = new Button ("build", button_ul, button_width, button_height);
-
    add_button ("remove");
    add_button ("build" );
 }
 
-MainMenu::~MainMenu (void)
-{
-   delete button_remove;
-   delete button_build;
-}
+MainMenu::~MainMenu (void) { /* pass */ }
 
 int MainMenu::get_menu_id (void)
 {

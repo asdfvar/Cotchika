@@ -8,7 +8,7 @@
 
 MainMenu::MainMenu (void) : BaseMenu ()
 {
-   menu_id = 1;
+   menu_id = menu::MAIN_MENU;
 
    width  = 0.25f;
    height = 0.3f;

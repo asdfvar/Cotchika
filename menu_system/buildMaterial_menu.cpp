@@ -8,7 +8,7 @@
 
 BuildMaterialMenu::BuildMaterialMenu (void) : BaseMenu ()
 {
-   menu_id = 3;
+   menu_id = menu::BUILD_MATERIAL_MENU;
 
    width  = 0.3f;
    height = 0.3f;

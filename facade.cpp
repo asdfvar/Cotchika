@@ -266,7 +266,7 @@ void Facade::mouseClick (int button, int state, int x, int y)
       if (active_menu != nullptr)
       {
          // "main" menu
-         if (active_menu->get_menu_id () == 1)
+         if (active_menu->get_menu_id () == menu::MAIN_MENU)
          {
             // "Remove" button
             if (active_menu->lunclick (window[0], window[1]) == 1)
@@ -286,7 +286,7 @@ void Facade::mouseClick (int button, int state, int x, int y)
          }
 
          // "build" menu
-         else if (active_menu->get_menu_id () == 2)
+         else if (active_menu->get_menu_id () == menu::BUILD_MENU)
          {
             // "material" button
             if (active_menu->lunclick (window[0], window[1]) == 1)
@@ -296,7 +296,7 @@ void Facade::mouseClick (int button, int state, int x, int y)
          }
 
          // "build material" menu
-         else if (active_menu->get_menu_id () == 3)
+         else if (active_menu->get_menu_id () == menu::BUILD_MATERIAL_MENU)
          {
             // "dry_Dirt" button
             if (active_menu->lunclick (window[0], window[1]) == 1)

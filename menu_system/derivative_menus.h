@@ -3,6 +3,14 @@
 
 #include "menu_system.h"
 
+namespace menu {
+   enum menuID {
+      MAIN_MENU,
+      BUILD_MENU,
+      BUILD_MATERIAL_MENU
+   };
+};
+
 class MainMenu : public BaseMenu
 {
    public:

@@ -1,5 +1,5 @@
 #include "jobs.h"
-#include "item.h"
+#include "material.h"
 #include <iostream>
 
 Job::Job (int flattened_index_in, int location_in[3])

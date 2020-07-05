@@ -1,7 +1,6 @@
 #include "society.h"
 #include "map.h"
 #include "utils.h"
-#include "item.h"
 #include "graphics.h"
 #include "text.h"
 #include "mode.h"

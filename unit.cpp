@@ -11,7 +11,6 @@
 #include "unit.h"
 #include "utils.h"
 #include "timer.h"
-#include "item.h"
 #include "pathfinding.h"
 
 Unit::Unit (

@@ -5,7 +5,7 @@
 #include <thread>
 #include "map.h"
 #include "jobs.h"
-#include "item.h"
+#include "material.h"
 #include "job_manager.h"
 
 class Unit

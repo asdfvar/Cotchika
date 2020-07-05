@@ -1,6 +1,5 @@
 #include "container.h"
 #include "jobs.h"
-#include "item.h"
 #include "unit.h"
 #include "map.h"
 #include <iostream>

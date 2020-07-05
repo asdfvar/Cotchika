@@ -1,5 +1,5 @@
-#ifndef ITEM_H
-#define ITEM_H
+#ifndef MATERIAL_H
+#define MATERIAL_H
 
 namespace mid
 {

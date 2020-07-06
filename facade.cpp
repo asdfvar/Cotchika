@@ -31,7 +31,7 @@ Facade::Facade (void)
 
    society.set_map_layer (map_layer);
 
-   society.set_view (transform, translation);
+   society.initial_setup (transform, translation);
 
    control_down = false;
    shift_down   = false;

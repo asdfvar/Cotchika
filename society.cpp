@@ -43,7 +43,7 @@ Society::~Society (void)
    delete[] fbuffer;
 }
 
-void Society::set_view (float transform[4], float translation[2])
+void Society::initial_setup (float transform[4], float translation[2])
 {
    // Random (x,y) location in the window [-1, 1]
    float rx = (float)(rand () % 1000) / 1000.0f;
@@ -71,9 +71,9 @@ void Society::set_view (float transform[4], float translation[2])
          cell_ind[2] = layer;
 
       float location[3] = {
-         static_cast<float> (cell_ind[0]),
-         static_cast<float> (cell_ind[1]),
-         static_cast<float> (cell_ind[2]) };
+         static_cast<float> (cell_ind[0]) + 0.5f,
+         static_cast<float> (cell_ind[1]) + 0.5f,
+         static_cast<float> (cell_ind[2]) + 0.5f };
 
       if (unit_ind % 2 == 1)
          units.push_back (new Squiggly (location, Map));

@@ -60,11 +60,13 @@ void BuildMenu::show (float *transform, float *translation)
    glEnd ();
 }
 
-void BuildMenu::translate (float dx, float dy)
+bool BuildMenu::translate (float dx, float dy)
 {
    if (hit_menuBar)
    {
       move (dx, dy);
       menuBar.move (dx, dy);
+      return true;
    }
+   return false;
 }

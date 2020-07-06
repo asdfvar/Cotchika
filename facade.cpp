@@ -486,11 +486,14 @@ void Facade::mouseMotion (int x, int y)
    // Adjust the translation of the world
    if (z_down == false && button0_down == true)
    {
+      bool hold_map_fixed = false;
+
       if (active_menu != nullptr)
       {
-         active_menu->translate (2.0f * delta[0], 2.0f * delta[1]);
+         hold_map_fixed = active_menu->translate (2.0f * delta[0], 2.0f * delta[1]);
       }
-      else {
+
+      if (!hold_map_fixed) {
          translation[0] += 2.0f * (delta[0] * inv_transform[0] + delta[1] * inv_transform[1]);
          translation[1] += 2.0f * (delta[0] * inv_transform[2] + delta[1] * inv_transform[3]);
       }

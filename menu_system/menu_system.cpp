@@ -103,12 +103,45 @@ int BaseMenu::lunclick (float x, float y)
    return 0;
 }
 
-void BaseMenu::show_components (float ul[2], float *transform, float *translation)
+void BaseMenu::show (float *transform, float *translation)
 {
+   // Show the buttons
    for (auto button = buttons.begin (); button != buttons.end (); button++)
       button->show (ul, transform, translation);
 
+   // Show the menu bar
    menuBar.show (ul, width, transform, translation);
+
+   glEnable (GL_BLEND);
+   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+   glColor4f (0.7f, 0.3f, 0.3f, alpha);
+
+   float point[2];
+
+   // Draw the border
+   glBegin (GL_POLYGON);
+
+   point[0] = ul[0];
+   point[1] = ul[1];
+   transformation (point, transform, translation);
+   glVertex3f (point[0], point[1], -0.2f);
+
+   point[0] = ul[0] + width;
+   point[1] = ul[1];
+   transformation (point, transform, translation);
+   glVertex3f (point[0], point[1], -0.2f);
+
+   point[0] = ul[0] + width;
+   point[1] = ul[1] - height;
+   transformation (point, transform, translation);
+   glVertex3f (point[0], point[1], -0.2f);
+
+   point[0] = ul[0];
+   point[1] = ul[1] - height;
+   transformation (point, transform, translation);
+   glVertex3f (point[0], point[1], -0.2f);
+
+   glEnd ();
 }
 
 bool BaseMenu::translate (float dx, float dy)

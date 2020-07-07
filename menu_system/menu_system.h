@@ -78,7 +78,7 @@ class BaseMenu : public MenuSystem
       int  lunclick    (float x, float y);
       virtual int  get_menu_id (void) { return 0; };
       bool translate (float dx, float dy);
-      void show_components (float ul[2], float *transform, float *translation);
+      void show (float *transform, float *translation);
 
    protected:
 

@@ -19,7 +19,6 @@ class MainMenu : public BaseMenu
       ~MainMenu (void);
 
       int  get_menu_id (void)               override;
-      void show        (float *transform, float *translation) override;
 
    private:
 
@@ -35,7 +34,6 @@ class BuildMenu : public BaseMenu
       ~BuildMenu (void);
 
       int  get_menu_id (void)               override;
-      void show        (float *transform, float *translation) override;
 
    private:
 
@@ -51,7 +49,6 @@ class BuildMaterialMenu : public BaseMenu
       ~BuildMaterialMenu (void);
 
       int  get_menu_id (void)               override;
-      void show        (float *transform, float *translation) override;
 
    private:
 

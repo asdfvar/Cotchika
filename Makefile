@@ -9,9 +9,8 @@ INC      = -I$(BASE_DIR) -I./menu_system/
 OBJDIR   = objdir
 
 OBJS = \
-       $(OBJDIR)/buildMaterial_menu.o \
-       $(OBJDIR)/build_menu.o         \
        $(OBJDIR)/container.o          \
+       $(OBJDIR)/derivative_menus.o   \
        $(OBJDIR)/derivative_units.o   \
        $(OBJDIR)/draw_unit.o          \
        $(OBJDIR)/facade.o             \
@@ -19,7 +18,6 @@ OBJS = \
        $(OBJDIR)/job_manager.o        \
        $(OBJDIR)/jobs.o               \
        $(OBJDIR)/main.o               \
-       $(OBJDIR)/main_menu.o          \
        $(OBJDIR)/map.o                \
        $(OBJDIR)/math_utils.o         \
        $(OBJDIR)/pathfinding.o        \

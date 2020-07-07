@@ -2,7 +2,6 @@
 #include "map.h"
 #include "utils.h"
 #include "graphics.h"
-#include "text.h"
 #include "mode.h"
 #include <GL/glut.h>
 #include <GL/glu.h>

@@ -34,7 +34,7 @@ class MenuSystem
          ul[1] += dy;
       }
 
-      virtual void show        (float *tranform, float *translation) { };
+      virtual void show (float *tranform, float *translation) { };
 
    protected:
 

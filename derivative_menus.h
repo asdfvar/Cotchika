@@ -18,7 +18,7 @@ class MainMenu : public BaseMenu
       MainMenu (void);
       ~MainMenu (void);
 
-      int  get_menu_id (void)               override;
+      int get_menu_id (void) override;
 
    private:
 
@@ -33,7 +33,7 @@ class BuildMenu : public BaseMenu
       BuildMenu (void);
       ~BuildMenu (void);
 
-      int  get_menu_id (void)               override;
+      int get_menu_id (void) override;
 
    private:
 
@@ -48,7 +48,7 @@ class BuildMaterialMenu : public BaseMenu
       BuildMaterialMenu (void);
       ~BuildMaterialMenu (void);
 
-      int  get_menu_id (void)               override;
+      int get_menu_id (void) override;
 
    private:
 

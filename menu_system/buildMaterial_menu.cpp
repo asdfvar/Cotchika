@@ -59,14 +59,3 @@ void BuildMaterialMenu::show (float *transform, float *translation)
 
    glEnd ();
 }
-
-bool BuildMaterialMenu::translate (float dx, float dy)
-{
-   if (hit_menuBar)
-   {
-      move (dx, dy);
-      menuBar.move (dx, dy);
-      return true;
-   }
-   return false;
-}

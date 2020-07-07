@@ -111,6 +111,17 @@ void BaseMenu::show_components (float ul[2], float *transform, float *translatio
    menuBar.show (ul, width, transform, translation);
 }
 
+bool BaseMenu::translate (float dx, float dy)
+{
+   if (hit_menuBar)
+   {
+      move (dx, dy);
+      menuBar.move (dx, dy);
+      return true;
+   }
+   return false;
+}
+
 void MenuBar::show (float ul[2], float width, float *transform, float *translation)
 {
    // draw the boundary of the button

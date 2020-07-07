@@ -24,17 +24,6 @@ int MainMenu::get_menu_id (void)
    return menu_id;
 };
 
-bool MainMenu::translate (float dx, float dy)
-{
-   if (hit_menuBar)
-   {
-      move (dx, dy);
-      menuBar.move (dx, dy);
-      return true;
-   }
-   return false;
-}
-
 void MainMenu::show (float *transform, float *translation)
 {
    BaseMenu::show_components (ul, transform, translation);

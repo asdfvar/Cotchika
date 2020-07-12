@@ -286,7 +286,6 @@ void Facade::mouseClick (int button, int state, int x, int y)
             // "Build" button
             else if (menu_system.lunclick (window[0], window[1]) == 2)
             {
-               menu_system.reset ();
                menu_system.set_active_menu (menu::BUILD_MENU);
                hud.set_mode (mode);
             }

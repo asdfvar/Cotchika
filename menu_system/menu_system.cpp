@@ -13,6 +13,11 @@ MenuSystem::MenuSystem (void) : BaseStructure ()
    ul[1] =  0.8f;
 };
 
+void MenuSystem::add_menu (float width, float height)
+{
+   menus.push_back (Menu (width, height));
+}
+
 void MenuSystem::reset (void)
 {
    active_menu_ind = -1;
@@ -34,11 +39,6 @@ bool MenuSystem::is_active (void)
 {
    if (active_menu_ind >= 0) return true;
    return false;
-}
-
-void MenuSystem::add_menu (float width, float height)
-{
-   menus.push_back (Menu (width, height));
 }
 
 int MenuSystem::lclick (float x, float y)
@@ -63,20 +63,15 @@ int MenuSystem::lunclick (float x, float y)
    return menu->lunclick (ul, x, y);
 }
 
-void MenuSystem::show (float *transform, float *translation)
+void MenuSystem::add_button (int menu_ind, const std::string input_text)
 {
    auto menu = menus.begin ();
-   for (int it = 0; menu != menus.end () && it < active_menu_ind; menu++, it++) {}
-
-   menu->show (ul, transform, translation);
-
-   float width = menu->get_width ();
-   menuBar.show (ul, width, transform, translation);
+   for (int it = 0; menu != menus.end () && it < menu_ind; menu++, it++) {}
+   menu->add_button (input_text);
 }
 
 bool MenuSystem::translate (float dx, float dy)
 {
-
    if (hit_menuBar)
    {
       ul[0] += dx;
@@ -86,9 +81,13 @@ bool MenuSystem::translate (float dx, float dy)
    return false;
 }
 
-void MenuSystem::add_button (int menu_ind, const std::string input_text)
+void MenuSystem::show (float *transform, float *translation)
 {
    auto menu = menus.begin ();
-   for (int it = 0; menu != menus.end () && it < menu_ind; menu++, it++) {}
-   menu->add_button (input_text);
+   for (int it = 0; menu != menus.end () && it < active_menu_ind; menu++, it++) {}
+
+   menu->show (ul, transform, translation);
+
+   float width = menu->get_width ();
+   menuBar.show (ul, width, transform, translation);
 }

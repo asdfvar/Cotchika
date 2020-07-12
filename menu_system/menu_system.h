@@ -16,15 +16,15 @@ class MenuSystem : public BaseStructure
 {
    public:
       MenuSystem (void);
+      void add_menu (float width, float height);
       void reset (void);
       void set_active_menu (int);
       int get_menu_id (void);
       bool is_active (void);
       int  lclick      (float x, float y);
       int  lunclick    (float x, float y);
-      bool translate (float dx, float dy);
-      void add_menu (float width, float height);
       void add_button (int menu_ind, const std::string input_text);
+      bool translate (float dx, float dy);
       void show (float *transform, float *translation);
 
    private:

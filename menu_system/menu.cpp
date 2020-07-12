@@ -6,10 +6,10 @@
 #include <GL/glext.h>
 #include <iostream>
 
-int Menu::lclick (float x, float y)
-{
-   if (menuBar.hit (x, y, ul, width)) hit_menuBar = true;
+Menu::Menu (void) : BaseStructure () { };
 
+int Menu::lclick (float ul[2], float x, float y)
+{
    int it = 1;
    for (auto button = buttons.begin (); button != buttons.end (); button++, it++)
    {
@@ -19,10 +19,8 @@ int Menu::lclick (float x, float y)
    return 0;
 }
 
-int Menu::lunclick (float x, float y)
+int Menu::lunclick (float ul[2], float x, float y)
 {
-   hit_menuBar = false;
-
    int it = 1;
    for (auto button = buttons.begin (); button != buttons.end (); button++, it++)
    {
@@ -32,14 +30,11 @@ int Menu::lunclick (float x, float y)
    return 0;
 }
 
-void Menu::show (float *transform, float *translation)
+void Menu::show (float ul[2], float *transform, float *translation)
 {
    // Show the buttons
    for (auto button = buttons.begin (); button != buttons.end (); button++)
       button->show (ul, transform, translation);
-
-   // Show the menu bar
-   menuBar.show (ul, width, transform, translation);
 
    glEnable (GL_BLEND);
    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -71,17 +66,6 @@ void Menu::show (float *transform, float *translation)
    glVertex3f (point[0], point[1], -0.2f);
 
    glEnd ();
-}
-
-bool Menu::translate (float dx, float dy)
-{
-   if (hit_menuBar)
-   {
-      move (dx, dy);
-      menuBar.move (dx, dy);
-      return true;
-   }
-   return false;
 }
 
 void Menu::add_button (const std::string input_text)

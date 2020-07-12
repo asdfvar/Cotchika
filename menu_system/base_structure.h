@@ -17,29 +17,11 @@ class BaseStructure
       BaseStructure (void)
       {
          alpha = 0.8f;
-
-         ul[0] = -0.8f;
-         ul[1] =  0.8f;
       }
-
-      void reset (void)
-      {
-         ul[0] = -0.8f;
-         ul[1] =  0.8f;
-      }
-
-      void move (float dx, float dy)
-      {
-         ul[0] += dx;
-         ul[1] += dy;
-      }
-
-      virtual void show (float *tranform, float *translation) { };
 
    protected:
 
       float alpha;
-      float ul[2];
       float width;
       float height;
 };

@@ -23,6 +23,7 @@ class Button : public BaseStructure
 
       Text  text;
       float width, height;
+      float ul[2];
 };
 
 #endif

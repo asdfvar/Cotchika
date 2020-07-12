@@ -17,6 +17,7 @@ class Button : public BaseStructure
       Button (const std::string input_text, float ul_in[2], float width_in, float height_in);
       bool lclick   (float x, float y, float ul[2]);
       bool lunclick (float x, float y, float ul[2]);
+      float get_width (void);
       void show     (float ul[2], float *transform, float *translation);
 
   private:

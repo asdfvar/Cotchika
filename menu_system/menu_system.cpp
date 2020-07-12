@@ -13,9 +13,9 @@ MenuSystem::MenuSystem (void) : BaseStructure ()
    ul[1] =  0.8f;
 };
 
-void MenuSystem::add_menu (float width, float height)
+void MenuSystem::add_menu (void)
 {
-   menus.push_back (Menu (width, height));
+   menus.push_back (Menu ());
 }
 
 void MenuSystem::reset (void)

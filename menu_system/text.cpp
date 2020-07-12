@@ -668,6 +668,27 @@ void Text::populate (double number)
    buffer[row] += id_str.str();
 }
 
+// TODO: look into how to do this better
+float Text::get_width (const float scale)
+{
+   const float hor = 0.01f;
+   const float ver = 0.02f;
+
+   float max_width = 0;
+   for (int k = 0; k <= row; k++)
+      if (buffer[k].length () > max_width) max_width = buffer[k].length ();
+
+   float offset = 0.0f;
+   float xmin = 0.01f - hor * 0.5f * scale;
+   float xmax = max_width * hor * 3.0f * scale + hor * 2.8f * scale;
+
+   float width = xmax - xmin;
+
+   width *= 0.5f;
+
+   return width;
+}
+
 /*
 ** function: display_contents from: Text
 */

@@ -16,7 +16,7 @@ class MenuSystem : public BaseStructure
 {
    public:
       MenuSystem (void);
-      void add_menu (float width, float height);
+      void add_menu (void);
       void reset (void);
       void set_active_menu (int);
       int get_menu_id (void);

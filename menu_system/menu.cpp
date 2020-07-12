@@ -6,11 +6,7 @@
 #include <GL/glext.h>
 #include <iostream>
 
-Menu::Menu (float width_in, float height_in) : BaseStructure ()
-{
-   width  = width_in;
-   height = height_in;
-}
+Menu::Menu () : BaseStructure () {}
 
 int Menu::lclick (float ul[2], float x, float y)
 {
@@ -50,18 +46,18 @@ void Menu::show (float ul[2], float *transform, float *translation)
    transformation (point, transform, translation);
    glVertex3f (point[0], point[1], -0.2f);
 
-   point[0] = ul[0] + width;
+   point[0] = ul[0] + get_width ();
    point[1] = ul[1];
    transformation (point, transform, translation);
    glVertex3f (point[0], point[1], -0.2f);
 
-   point[0] = ul[0] + width;
-   point[1] = ul[1] - height;
+   point[0] = ul[0] + get_width ();
+   point[1] = ul[1] - get_height ();
    transformation (point, transform, translation);
    glVertex3f (point[0], point[1], -0.2f);
 
    point[0] = ul[0];
-   point[1] = ul[1] - height;
+   point[1] = ul[1] - get_height ();
    transformation (point, transform, translation);
    glVertex3f (point[0], point[1], -0.2f);
 
@@ -86,3 +82,19 @@ void Menu::add_button (const std::string input_text)
 
    buttons.push_back (button);
 }
+
+float Menu::get_width (void)
+{
+   float width = 0.0f;
+   for (auto button = buttons.begin (); button != buttons.end (); button++)
+      width += button->get_width ();
+
+   return width;
+};
+
+float Menu::get_height (void)
+{
+   float height = 0.15f * buttons.size ();
+
+   return height;
+};

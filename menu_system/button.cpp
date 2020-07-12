@@ -35,6 +35,11 @@ bool Button::lunclick (float x, float y, float menu_ul[2])
    return false;
 }
 
+float Button::get_width (void)
+{
+   return text.get_width (1.0f);
+}
+
 void Button::show (float menu_ul[2], float *transform, float *translation)
 {
    text.display_contents (

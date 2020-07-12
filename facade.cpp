@@ -19,15 +19,16 @@ Facade::Facade (void)
 {
    gettimeofday (&start, NULL);
 
-   menu_system.add_menu (0.25f, 0.3f);
+   menu_system.add_menu ();
    menu_system.add_button (menu::MAIN_MENU, "remove");
    menu_system.add_button (menu::MAIN_MENU, "build");
+   menu_system.add_button (menu::MAIN_MENU, "accounting");
 
-   menu_system.add_menu (0.3f, 0.3f);
+   menu_system.add_menu ();
    menu_system.add_button (menu::BUILD_MENU, "material");
    menu_system.add_button (menu::BUILD_MENU, "item");
 
-   menu_system.add_menu (0.3f, 0.3f);
+   menu_system.add_menu ();
    menu_system.add_button (menu::BUILD_MATERIAL_MENU, "dirt");
    menu_system.add_button (menu::BUILD_MATERIAL_MENU, "stone");
 

@@ -16,6 +16,8 @@ class Text
       void populate     (float);
       void populate     (double);
 
+      float get_width (const float scale);
+
       void display_contents (
             const float x,
             const float y,

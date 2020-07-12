@@ -16,9 +16,7 @@ int Menu::lclick (float ul[2], float x, float y)
 {
    int it = 1;
    for (auto button = buttons.begin (); button != buttons.end (); button++, it++)
-   {
       if (button->lclick (x, y, ul)) return it;
-   }
 
    return 0;
 }
@@ -27,9 +25,7 @@ int Menu::lunclick (float ul[2], float x, float y)
 {
    int it = 1;
    for (auto button = buttons.begin (); button != buttons.end (); button++, it++)
-   {
       if (button->lunclick (x, y, ul)) return it;
-   }
 
    return 0;
 }

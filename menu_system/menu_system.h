@@ -15,20 +15,22 @@
 class MenuSystem : public BaseStructure
 {
    public:
-
       MenuSystem (void);
-
       void reset (void);
-      int  lclick      (int menu_id, float x, float y);
-      int  lunclick    (int menu_id, float x, float y);
-      virtual int  get_menu_id (void) { return 0; };
+      void set_active_menu (int);
+      int get_menu_id (void);
+      bool is_active (void);
+      int  lclick      (float x, float y);
+      int  lunclick    (float x, float y);
       bool translate (float dx, float dy);
       void add_menu (float width, float height);
       void add_button (int menu_ind, const std::string input_text);
-      void show (int menu_ind, float *transform, float *translation);
+      void show (float *transform, float *translation);
+
+   private:
+      int active_menu_ind;
 
    protected:
-
       MenuBar menuBar;
       bool    hit_menuBar;
       float   ul[2];

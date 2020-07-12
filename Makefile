@@ -10,7 +10,6 @@ OBJDIR   = objdir
 
 OBJS = \
        $(OBJDIR)/container.o          \
-       $(OBJDIR)/derivative_menus.o   \
        $(OBJDIR)/derivative_units.o   \
        $(OBJDIR)/draw_unit.o          \
        $(OBJDIR)/facade.o             \

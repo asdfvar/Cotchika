@@ -19,7 +19,17 @@ Facade::Facade (void)
 {
    gettimeofday (&start, NULL);
 
-   active_menu = nullptr;
+   menu_system.add_menu (0.25f, 0.3f);
+   menu_system.add_button (menu::MAIN_MENU, "remove");
+   menu_system.add_button (menu::MAIN_MENU, "build");
+
+   menu_system.add_menu (0.3f, 0.3f);
+   menu_system.add_button (menu::MAIN_MENU, "material");
+   menu_system.add_button (menu::MAIN_MENU, "item");
+
+   menu_system.add_menu (0.3f, 0.3f);
+   menu_system.add_button (menu::MAIN_MENU, "dirt");
+   menu_system.add_button (menu::MAIN_MENU, "stone");
 
    transform[0] = 1.0f; transform[1] = 0.0f;
    transform[2] = 0.0f; transform[3] = 1.0f;
@@ -71,12 +81,8 @@ void Facade::keyboardDown (const char key, int x, int y)
    // Escape key
    if (!control_down && key == 27) {
       society.unselect_all ();
-      mode        = mode::NONE;
-
-      if (active_menu != nullptr)
-         active_menu->reset ();
-
-      active_menu = nullptr;
+      mode = mode::NONE;
+      menu_system.reset ();
    }
 
    // Enter key
@@ -186,7 +192,7 @@ void Facade::keyboardDown (const char key, int x, int y)
       society.select_group (0);
 
    else if (key == 'm') {
-      active_menu = &main_menu;
+      menu_system.set_active_menu (menu::MAIN_MENU);
    }
 
    hud.set_mode (mode);
@@ -263,56 +269,56 @@ void Facade::mouseClick (int button, int state, int x, int y)
 
    if (button0_down == false)
    {
-      if (active_menu != nullptr)
+      if (menu_system.is_active ())
       {
          // "main" menu
-         if (active_menu->get_menu_id () == menu::MAIN_MENU)
+         if (menu_system.get_menu_id () == menu::MAIN_MENU)
          {
             // "Remove" button
-            if (active_menu->lunclick (window[0], window[1]) == 1)
+            if (menu_system.lunclick (window[0], window[1]) == 1)
             {
                mode = mode::REMOVE;
-               active_menu = nullptr;
+               menu_system.reset ();
                hud.set_mode (mode);
             }
 
             // "Build" button
-            else if (active_menu->lunclick (window[0], window[1]) == 2)
+            else if (menu_system.lunclick (window[0], window[1]) == 2)
             {
-               active_menu->reset ();
-               active_menu = &build_menu;
+               menu_system.reset ();
+               menu_system.set_active_menu (menu::BUILD_MENU);
                hud.set_mode (mode);
             }
          }
 
          // "build" menu
-         else if (active_menu->get_menu_id () == menu::BUILD_MENU)
+         else if (menu_system.get_menu_id () == menu::BUILD_MENU)
          {
             // "material" button
-            if (active_menu->lunclick (window[0], window[1]) == 1)
+            if (menu_system.lunclick (window[0], window[1]) == 1)
             {
-               active_menu = &build_material_menu;
+               menu_system.set_active_menu (menu::BUILD_MATERIAL_MENU);
             }
          }
 
          // "build material" menu
-         else if (active_menu->get_menu_id () == menu::BUILD_MATERIAL_MENU)
+         else if (menu_system.get_menu_id () == menu::BUILD_MATERIAL_MENU)
          {
             // "dry_Dirt" button
-            if (active_menu->lunclick (window[0], window[1]) == 1)
+            if (menu_system.lunclick (window[0], window[1]) == 1)
             {
                mode        = mode::BUILD;
                jobmaterial = mid::dry_dirt;
-               active_menu = nullptr;
+               menu_system.set_active_menu (menu::BUILD_MENU);
                hud.set_mode (mode);
             }
 
             // "Stone" button
-            else if (active_menu->lunclick (window[0], window[1]) == 2)
+            else if (menu_system.lunclick (window[0], window[1]) == 2)
             {
                mode        = mode::BUILD;
                jobmaterial = mid::stone;
-               active_menu = nullptr;
+               menu_system.reset ();
                hud.set_mode (mode);
             }
          }
@@ -321,7 +327,7 @@ void Facade::mouseClick (int button, int state, int x, int y)
 
    if (button0_down == true)
    {
-      if (active_menu != nullptr) active_menu->lclick (window[0], window[1]);
+      if (menu_system.is_active ()) menu_system.lclick (window[0], window[1]);
    }
 
    // Set the destination for the selected units
@@ -488,10 +494,8 @@ void Facade::mouseMotion (int x, int y)
    {
       bool hold_map_fixed = false;
 
-      if (active_menu != nullptr)
-      {
-         hold_map_fixed = active_menu->translate (2.0f * delta[0], 2.0f * delta[1]);
-      }
+      if (menu_system.is_active ())
+         hold_map_fixed = menu_system.translate (2.0f * delta[0], 2.0f * delta[1]);
 
       if (!hold_map_fixed) {
          translation[0] += 2.0f * (delta[0] * inv_transform[0] + delta[1] * inv_transform[1]);
@@ -666,8 +670,8 @@ void Facade::display (void)
    float menu_transform[4]   = { 1.0f, 0.0f, 0.0f, 1.0f };
    float menu_translation[2] = { 0.0f, 0.0f };
 
-   if (active_menu != nullptr) {
-      active_menu->show (menu_transform, menu_translation);
+   if (menu_system.is_active ()) {
+      menu_system.show (menu_transform, menu_translation);
    }
 
    // swap this buffer for the old one

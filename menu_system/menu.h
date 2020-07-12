@@ -2,7 +2,6 @@
 #define MENU_H
 
 #include "base_structure.h"
-#include "menu_bar.h"
 #include "button.h"
 #include <GL/glut.h>
 #include <GL/glu.h>

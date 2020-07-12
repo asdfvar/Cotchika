@@ -1,5 +1,4 @@
-#include "text.h"
-#include "menu.h"
+#include "menu_system.h"
 #include <GL/glut.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
@@ -29,11 +28,10 @@ int MenuSystem::lclick (int menu_ind, float x, float y)
    auto menu = menus.begin ();
    for (int it = 0; menu != menus.end () && it < menu_ind; menu++, it++) {}
 
-   menu = menus[menu_ind];
-   menu.lclick (ul, x, y);
+   menu->lclick (ul, x, y);
 
-   float width  = menu.get_width ();
-   float height = menu.get_height ();
+   float width  = menu->get_width ();
+   float height = menu->get_height ();
 
    if (menuBar.hit (x, y, ul, width)) hit_menuBar = true;
 
@@ -44,18 +42,21 @@ int MenuSystem::lunclick (int menu_ind, float x, float y)
 {
    hit_menuBar = false;
 
-   auto menu = menus[menu_ind];
-   menu.lunclick (ul, x, y);
+   auto menu = menus.begin ();
+   for (int it = 0; menu != menus.end () && it < menu_ind; menu++, it++) {}
+   menu->lunclick (ul, x, y);
 
    return 0;
 }
 
 void MenuSystem::show (int menu_ind, float *transform, float *translation)
 {
-   menuBar.show (ul, width, transform, translation);
+   auto menu = menus.begin ();
+   for (int it = 0; menu != menus.end () && it < menu_ind; menu++, it++) {}
+   menu->show (ul, transform, translation);
 
-   auto menu = menus[menu_ind];
-   menu.show (transform, translation);
+   float width = menu->get_width ();
+   menuBar.show (ul, width, transform, translation);
 }
 
 bool MenuSystem::translate (float dx, float dy)
@@ -65,7 +66,6 @@ bool MenuSystem::translate (float dx, float dy)
    {
       ul[0] += dx;
       ul[1] += dy;
-      menuBar.move (dx, dy);
       return true;
    }
    return false;
@@ -73,6 +73,7 @@ bool MenuSystem::translate (float dx, float dy)
 
 void MenuSystem::add_button (int menu_ind, const std::string input_text)
 {
-   auto menu = menus[menu_ind];
-   menu.add_button (input_text);
+   auto menu = menus.begin ();
+   for (int it = 0; menu != menus.end () && it < menu_ind; menu++, it++) {}
+   menu->add_button (input_text);
 }

@@ -1,8 +1,8 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include "text.h"
 #include "base_structure.h"
+#include "text.h"
 #include <GL/glut.h>
 #include <GL/glu.h>
 #include <GL/gl.h>

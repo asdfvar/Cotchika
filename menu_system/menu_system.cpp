@@ -67,6 +67,7 @@ void MenuSystem::show (float *transform, float *translation)
 {
    auto menu = menus.begin ();
    for (int it = 0; menu != menus.end () && it < active_menu_ind; menu++, it++) {}
+
    menu->show (ul, transform, translation);
 
    float width = menu->get_width ();

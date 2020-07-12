@@ -24,12 +24,12 @@ Facade::Facade (void)
    menu_system.add_button (menu::MAIN_MENU, "build");
 
    menu_system.add_menu (0.3f, 0.3f);
-   menu_system.add_button (menu::MAIN_MENU, "material");
-   menu_system.add_button (menu::MAIN_MENU, "item");
+   menu_system.add_button (menu::BUILD_MENU, "material");
+   menu_system.add_button (menu::BUILD_MENU, "item");
 
    menu_system.add_menu (0.3f, 0.3f);
-   menu_system.add_button (menu::MAIN_MENU, "dirt");
-   menu_system.add_button (menu::MAIN_MENU, "stone");
+   menu_system.add_button (menu::BUILD_MATERIAL_MENU, "dirt");
+   menu_system.add_button (menu::BUILD_MATERIAL_MENU, "stone");
 
    transform[0] = 1.0f; transform[1] = 0.0f;
    transform[2] = 0.0f; transform[3] = 1.0f;
@@ -309,7 +309,7 @@ void Facade::mouseClick (int button, int state, int x, int y)
             {
                mode        = mode::BUILD;
                jobmaterial = mid::dry_dirt;
-               menu_system.set_active_menu (menu::BUILD_MENU);
+               menu_system.reset ();
                hud.set_mode (mode);
             }
 

@@ -8,8 +8,10 @@ OBJDIR = objdir
 INC = -I$(BASE_DIR)
 
 OBJS = \
-       $(OBJDIR)/menu_system.o  \
-       $(OBJDIR)/text.o         \
+       $(OBJDIR)/button.o          \
+       $(OBJDIR)/menu.o            \
+       $(OBJDIR)/menu_bar.o        \
+       $(OBJDIR)/text.o            \
 #
 
 LIBNAME = libmenu_system.a

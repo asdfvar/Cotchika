@@ -1,7 +1,5 @@
-#ifndef DERIVATIVE_MENUS_H
-#define DERIVATIVE_MENUS_H
-
-#include "menu_system.h"
+#ifndef MENU_IDS_H
+#define MENU_IDS_H
 
 namespace menu {
    enum menuID {

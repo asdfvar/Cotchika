@@ -27,7 +27,6 @@ class MenuSystem : public BaseStructure
 
    protected:
 
-      float   width, height;
       MenuBar menuBar;
       bool    hit_menuBar;
       float   ul[2];

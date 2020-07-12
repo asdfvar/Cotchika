@@ -6,7 +6,11 @@
 #include <GL/glext.h>
 #include <iostream>
 
-Menu::Menu (void) : BaseStructure () { };
+Menu::Menu (float width_in, float height_in) : BaseStructure ()
+{
+   width  = width_in;
+   height = height_in;
+}
 
 int Menu::lclick (float ul[2], float x, float y)
 {

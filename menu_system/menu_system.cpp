@@ -19,20 +19,23 @@ void MenuSystem::reset (void)
    ul[1] =  0.8f;
 }
 
-void MenuSystem::add_menu (void)
+void MenuSystem::add_menu (float width, float height)
 {
-   menus.push_back (Menu);
+   menus.push_back (Menu (width, height));
 }
 
 int MenuSystem::lclick (int menu_ind, float x, float y)
 {
-   if (menuBar.hit (x, y, ul, width)) hit_menuBar = true;
-
    auto menu = menus.begin ();
    for (int it = 0; menu != menus.end () && it < menu_ind; menu++, it++) {}
 
    menu = menus[menu_ind];
    menu.lclick (ul, x, y);
+
+   float width  = menu.get_width ();
+   float height = menu.get_height ();
+
+   if (menuBar.hit (x, y, ul, width)) hit_menuBar = true;
 
    return 0;
 }

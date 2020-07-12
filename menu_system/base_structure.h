@@ -22,8 +22,6 @@ class BaseStructure
    protected:
 
       float alpha;
-      float width;
-      float height;
 };
 
 #endif

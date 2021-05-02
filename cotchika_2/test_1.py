@@ -16,7 +16,10 @@ domain[3, 3] = -1.0
 domain[3, 2] = -1.0
 domain[3, 1] = -1.0
 
-domain[6, 3] = 20.0
+domain[7, 3] = 1.0
+domain[6, 3] = 1.0
+domain[6, 4] = 1.0
+domain[6, 5] = 1.0
 
 cost = common.generate_cost (domain, start, destination)
 

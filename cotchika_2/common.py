@@ -16,8 +16,9 @@ class Unit:
 
 # Generate a cost from the starting location to the destination
 # domain - N-dimensional Numpy array with cost values associated with each cell.
-#          Values < 0 indicate obstacles
-# start  - Tuple value indicating the starting cell
+#          Values < 0 indicate obstacles whereas values >= 0 indicate cost for entering the cell
+# start - Tuple value indicating the starting cell
+# destination - Tuple value indicating the starting cell
 
 def generate_cost (domain, start, destination):
    cost = np.zeros (np.shape (domain))
@@ -33,27 +34,28 @@ def generate_cost (domain, start, destination):
    # Continue to update the cost function until either the destination is found or the cost
    # function is no longer updated
    while destination not in perimeter and len (perimeter) > 0:
-      # Find the cell in the perimeter closest to the destination
+
+      # Find the cell in the perimeter closest to the destination with the least domain cost
       min_dist = float ('inf')
-      nearest_cell = perimeter[0]
+      best_cell = perimeter[0]
       for cell in perimeter:
-         dest_dist = la.norm (np.array (destination) - np.array (cell))
+         dest_dist = la.norm (np.array (destination) - np.array (cell)) + domain[cell]
          if dest_dist < min_dist:
             min_dist = dest_dist
-            nearest_cell = cell
+            best_cell = cell
 
-      # Update the perimeter by checking the neighboring cells for each cell of the perimeter.
-      # Any cells that don't have an updated cost will be added to the new list along with the
-      # associated cost updated
+      # Update the perimeter by checking the neighboring cells for the current cell of the
+      # perimeter. Any cells that don't have an updated cost will be added to the perimeter list
+      # along with the associated cost updated
 
-      cell_cost = cost[nearest_cell]
+      cell_cost = cost[best_cell]
 
       #  + + +
       #  + x +
       #  + + +
       cell_offset = [-1 for ind in range (domain.ndim)]
       for dir_count in range (3**domain.ndim):
-         new_cell = tuple (np.array (nearest_cell) + np.array (cell_offset))
+         new_cell = tuple (np.array (best_cell) + np.array (cell_offset))
 
          if cost[new_cell] >= 0.0 and \
          all (np.array (new_cell) >= 0) and \
@@ -81,6 +83,6 @@ def generate_cost (domain, start, destination):
             cell_offset[index] += 1
 
       # Remove the originally nearest cell from the perimeter
-      perimeter.remove (nearest_cell)
+      perimeter.remove (best_cell)
 
    return cost

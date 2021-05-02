@@ -1,4 +1,5 @@
 import numpy as np
+from numpy import linalg as la
 import copy
 
 class Map:
@@ -13,65 +14,73 @@ class Unit:
       self.ac = ac
       self.domain = domain
 
-# domain - N-dimensional array with cost values associated with each cell.
+# Generate a cost from the starting location to the destination
+# domain - N-dimensional Numpy array with cost values associated with each cell.
 #          Values < 0 indicate obstacles
-def find_path (domain, start, destination):
+# start  - Tuple value indicating the starting cell
+
+def generate_cost (domain, start, destination):
    cost = np.zeros (np.shape (domain))
    cost[tuple (start)] = 1.0
    step_cost = 1.0
+
+   perimeter = [start]
 
    current_index = start
    found         = False
    updated       = True
 
-   while not found and updated:
-      updated = False
+   # Continue to update the cost function until either the destination is found or the cost
+   # function is no longer updated
+   while destination not in perimeter and len (perimeter) > 0:
+      # Find the cell in the perimeter closest to the destination
+      min_dist = float ('inf')
+      nearest_cell = perimeter[0]
+      for cell in perimeter:
+         dest_dist = la.norm (np.array (destination) - np.array (cell))
+         if dest_dist < min_dist:
+            min_dist = dest_dist
+            nearest_cell = cell
 
-      ###################################################################################
-      # Update or check neighboring cells biased on the direction toward the destination.
-      # Directions will be checked using the 4 cardinal directions
-      ###################################################################################
+      # Update the perimeter by checking the neighboring cells for each cell of the perimeter.
+      # Any cells that don't have an updated cost will be added to the new list along with the
+      # associated cost updated
 
-      desired_direction = destination - current_index
+      cell_cost = cost[nearest_cell]
 
-      # Sort in descending order (it's desired to step in the direction with the greatest
-      # distance available)
-      direction_order = np.argsort (np.abs (desired_direction))[::-1]
+      #  + + +
+      #  + x +
+      #  + + +
+      cell_offset = [-1 for ind in range (domain.ndim)]
+      for dir_count in range (3**domain.ndim):
+         new_cell = tuple (np.array (nearest_cell) + np.array (cell_offset))
 
-      for direction in direction_order:
-         # From the current index, update in the currently desired direction
-         candidate_index = copy.deepcopy (current_index)
-         candidate_index[direction] += np.sign (desired_direction[direction])
+         if cost[new_cell] >= 0.0 and \
+         all (np.array (new_cell) >= 0) and \
+         all (np.array (new_cell) < np.shape (domain)):
+            domain_cost = domain[new_cell]
+            if domain_cost >= 0.0:
+               step_dist  = la.norm (cell_offset)
 
-         # Check edge conditions or obstacles
-         if candidate_index[direction] < 0: continue
-         if candidate_index[direction] >= np.shape (cost)[direction]: continue
-         if domain[tuple (candidate_index)] < 0.0: continue
+               # The cost is determined by a linear combination of the step distance and the
+               # domain cost added to the cost at the current cell
+               new_cost = cell_cost + step_dist + domain_cost
 
-         # Update the cost function if there's no associated cost here (cost <= 0)
-         if cost[tuple (candidate_index)] <= 0.0: #
-            cost[tuple (candidate_index)] =                   \
-                  cost[tuple (current_index)] +               \
-                  step_cost + domain[tuple (candidate_index)]
-            current_index = candidate_index
-            updated = True
-            break
+               if new_cost < cost[new_cell] or cost[new_cell] == 0.0:
+                  cost[new_cell] = new_cost
+                  if new_cell not in perimeter:
+                     perimeter.append (new_cell)
 
-         # Update the cost function appropriately if it's a cheaper option than what's there
-         elif cost[tuple (candidate_index)] > \
-               cost[tuple (current_index)] +  \
-               step_cost                   +  \
-               domain[tuple (candidate_index)]: #
-            cost[tuple (candidate_index)] =     \
-                  cost[tuple (current_index)] + \
-                  step_cost                   + \
-                  domain[tuple (candidate_index)]
-            current_index = candidate_index
-            updated = True
-            break
+         # Update the cell offset to the next N-D neighboring cell
+         cell_offset[0] += 1
+         index = 0
+         while cell_offset[index] > 1:
+            cell_offset[index] = -1
+            index += 1
+            if index >= len (cell_offset): break
+            cell_offset[index] += 1
 
-   if all (current_index == destination): found = True
-
-   # TODO: redo this but instead step along the edge of possible updates to bias the one closest to the destination
+      # Remove the originally nearest cell from the perimeter
+      perimeter.remove (nearest_cell)
 
    return cost
